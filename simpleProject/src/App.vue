@@ -3,6 +3,8 @@
     <router-link to="/">home</router-link>
     <router-link to="/hi">Hi</router-link>
     <router-link to='/class'>Class 与 Style 绑定</router-link>
+    <router-link to='/if'>条件渲染</router-link>
+    <router-link to='/tem'>模板</router-link>
     <router-view></router-view>
   </div>
 </template>

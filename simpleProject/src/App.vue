@@ -5,6 +5,9 @@
     <router-link to='/class'>Class 与 Style 绑定</router-link>
     <router-link to='/if'>条件渲染</router-link>
     <router-link to='/tem'>模板</router-link>
+    <router-link to='/slot'>Slot</router-link>
+    <router-link to='/trans'>过渡</router-link>
+    <router-link to='/direactive'>自定义指令</router-link>
     <router-view></router-view>
   </div>
 </template>

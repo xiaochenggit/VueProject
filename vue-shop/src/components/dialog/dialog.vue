@@ -58,8 +58,7 @@ export default {
   height: 100%;
 }
 .dialog-cover {
-  background: #000;
-  opacity: .3;
+  background: rgba(0,0,0,0.3);
   position: fixed;
   z-index: 5;
   top: 0;

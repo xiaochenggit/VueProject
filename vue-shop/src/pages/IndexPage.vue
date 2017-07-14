@@ -175,7 +175,7 @@ export default {
 	},
 	methods:{
 		change(index) {
-			console.log('换成了'+ index +'页')
+			//console.log('换成了'+ index +'页')
 		}
 	}
 }

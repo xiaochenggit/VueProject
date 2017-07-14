@@ -25,7 +25,7 @@
 	    <p>© 2016 fishenal MIT</p>
 	  </div>
     <v-dialog :isShow='isLoginDialog' @dialogClose='dialogClose' :name="'isLoginDialog'">
-      <p>登录</p>
+      <v-login></v-login>
     </v-dialog>
     <v-dialog :isShow='isRegDialog' @dialogClose='dialogClose' :name="'isRegDialog'">
       <p>注册</p>
@@ -37,6 +37,7 @@
 </template>
 <script>
 import dialog from '@/components/dialog/dialog';
+import login from '@/components/Login';
 export default {
   data() {
     return {
@@ -62,7 +63,8 @@ export default {
     }
   },
   components: {
-    'v-dialog': dialog
+    'v-dialog': dialog,
+    'v-login': login
   }
 }
 </script>

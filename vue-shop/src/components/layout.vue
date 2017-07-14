@@ -7,10 +7,17 @@
 	      </router-link>
 	      <div class="head-nav">
 	        <ul class="nav-list">
-	         <li @click="changeDialog('isLoginDialog')">登录</li>
-	         <li class="nav-pile">|</li>
-	         <li @click="changeDialog('isRegDialog')">注册</li>
-	         <li class="nav-pile">|</li>
+           <div v-if='user.username'>
+             <li>{{this.user.username}}</li>
+             <li class="nav-pile">|</li>
+             <li @click="goOut">退出</li>
+           </div>
+	         <div v-else>
+             <li @click="changeDialog('isLoginDialog')">登录</li>
+             <li class="nav-pile">|</li>
+             <li @click="changeDialog('isRegDialog')">注册</li>
+           </div>
+           <li class="nav-pile">|</li> 
 	         <li @click="changeDialog('isAboutDialog')">关于</li>
 	        </ul>
 	      </div>  
@@ -25,7 +32,7 @@
 	    <p>© 2016 fishenal MIT</p>
 	  </div>
     <v-dialog :isShow='isLoginDialog' @dialogClose='dialogClose' :name="'isLoginDialog'">
-      <v-login></v-login>
+      <v-login @onLogin='onLogin' @dialogClose='dialogClose'></v-login>
     </v-dialog>
     <v-dialog :isShow='isRegDialog' @dialogClose='dialogClose' :name="'isRegDialog'">
       <p>注册</p>
@@ -43,7 +50,8 @@ export default {
     return {
       isLoginDialog: false,
       isRegDialog: false,
-      isAboutDialog: false
+      isAboutDialog: false,
+      user: {}
     }
   },
   methods: {
@@ -60,6 +68,19 @@ export default {
      */
     dialogClose(dialogType) {
       this[dialogType] = false;
+    },
+    // 用户登录
+    onLogin(user) {
+      this.$set(this,'user',user);
+    },
+    // 用户退出
+    goOut() {
+      this.$http.post('/api/login')
+      .then((data) => {
+        this.user = {};
+      }, (error) => { 
+        console.log(error);
+      })
     }
   },
   components: {
@@ -154,6 +175,9 @@ body {
 .head-nav li {
   cursor: pointer;
   float: left;
+}
+.nav-list div{
+   float: left;
 }
 .nav-pile {
   padding: 0 10px;

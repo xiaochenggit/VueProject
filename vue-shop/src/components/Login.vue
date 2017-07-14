@@ -73,7 +73,15 @@ export default {
 				this.errorText = '请输入正确的账号或密码！'
 			} else {
 				this.errorText = '';
-				console.log('账号:' + this.usernameModel + '密码:' + this.passwordModel);
+				this.$http.post('/api/login')
+				.then((data) => {
+					// 发送登录用户数据
+					this.$emit('onLogin', data.body);
+					// 关掉登录弹窗
+					this.$emit('dialogClose','isLoginDialog');
+				}, (error) => {
+					console.log(error);
+				})
 			}
 		}
 	}

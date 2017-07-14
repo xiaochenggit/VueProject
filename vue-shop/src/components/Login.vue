@@ -22,7 +22,7 @@
           <a class="button" @click="onLogin">登录</a>
         </div>
       </div>
-      <p>{{ errorText }}</p>
+      <p v-if='errorText'>{{ errorText }}</p>
     </div>
   </div>
 </template>
@@ -41,7 +41,11 @@ export default {
 			if (!/@/g.test(this.usernameModel)) {
 				errorText = '没有 @ 符号！';
 				status = false;
-			} 
+			}
+			if (!this.userFlag) {
+				errorText = '';
+				this.userFlag = true;
+			}
 			return {
 				errorText,
 				status
@@ -53,6 +57,10 @@ export default {
 				errorText = '密码不能小于8位！';
 				status = false;
 			}
+			if (!this.passwordFlag) {
+				errorText = '';
+				this.passwordFlag = true;
+			}
 			return {
 				errorText,
 				status
@@ -62,8 +70,9 @@ export default {
 	methods: {
 		onLogin() {
 			if (!this.userErrors.status || !this.passwordErrors.status) {
-				alert('请输入正确的账号密码');
+				this.errorText = '请输入正确的账号或密码！'
 			} else {
+				this.errorText = '';
 				console.log('账号:' + this.usernameModel + '密码:' + this.passwordModel);
 			}
 		}

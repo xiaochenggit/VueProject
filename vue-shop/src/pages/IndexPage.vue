@@ -188,6 +188,13 @@ export default {
 .index-left-block li {
   padding: 5px;
 }
+.lastest-news li a{
+	display: block;
+	width: 100%;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
 .index-board-list {
   overflow: hidden;
    width: 920px;

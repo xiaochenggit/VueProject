@@ -7,11 +7,11 @@
 	      </router-link>
 	      <div class="head-nav">
 	        <ul class="nav-list">
-	         <li>登录</li>
+	         <li @click="changeDialog('isLoginDialog')">登录</li>
 	         <li class="nav-pile">|</li>
-	         <li>注册</li>
+	         <li @click="changeDialog('isRegDialog')">注册</li>
 	         <li class="nav-pile">|</li>
-	         <li>关于</li>
+	         <li @click="changeDialog('isAboutDialog')">关于</li>
 	        </ul>
 	      </div>  
 	    </div>
@@ -24,11 +24,46 @@
 	  <div class="app-foot">
 	    <p>© 2016 fishenal MIT</p>
 	  </div>
+    <v-dialog :isShow='isLoginDialog' @dialogClose='dialogClose' :name="'isLoginDialog'">
+      <p>登录</p>
+    </v-dialog>
+    <v-dialog :isShow='isRegDialog' @dialogClose='dialogClose' :name="'isRegDialog'">
+      <p>注册</p>
+    </v-dialog>
+    <v-dialog :isShow='isAboutDialog' @dialogClose='dialogClose' :name="'isAboutDialog'">
+      <p>关于</p>
+    </v-dialog>
 	</div>
 </template>
 <script>
+import dialog from '@/components/dialog/dialog';
 export default {
-
+  data() {
+    return {
+      isLoginDialog: false,
+      isRegDialog: false,
+      isAboutDialog: false
+    }
+  },
+  methods: {
+    /**
+     * [changeDialog 打开弹窗]
+     * @param  {[string]} dialogType [弹窗控制变量] 本组件传递
+     */
+    changeDialog(dialogType) {
+      this[dialogType] = true;
+    },
+    /**
+     * [dialogClose 关闭弹窗]
+     * @param  {[string]} dialogType [弹窗控制变量] 子组件 $emit
+     */
+    dialogClose(dialogType) {
+      this[dialogType] = false;
+    }
+  },
+  components: {
+    'v-dialog': dialog
+  }
 }
 </script>
 <style>

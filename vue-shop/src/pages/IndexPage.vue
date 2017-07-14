@@ -43,122 +43,122 @@
 	</div>
 </template>
 <script>
-import slideShow from '@/components/slideShow/slideShow';
+import slideShow from '@/components/slideShow/slideShow'
 export default {
 	data() {
 	   return {
-						productList: {
-						pc: {
-						  title: 'PC产品',
-						  list: [
-						    {
-						      name: '数据统计',
-						      url: 'http://starcraft.com'
-						    },
-						    {
-						      name: '数据预测',
-						      url: 'http://warcraft.com'
-						    },
-						    {
-						      name: '流量分析',
-						      url: 'http://overwatch.com',
-						      hot: true
-						    },
-						    {
-						      name: '广告发布',
-						      url: 'http://hearstone.com'
-						    }
-						  ]
-						},
-						app: {
-						  title: '手机应用类',
-						  last: true,
-						  list: [
-						    {
-						      name: '91助手',
-						      url: 'http://weixin.com'
-						    },
-						    {
-						      name: '产品助手',
-						      url: 'http://twitter.com',
-						      hot: true
-						    },
-						    {
-						      name: '智能地图',
-						      url: 'http://maps.com'
-						    },
-						    {
-						      name: '团队语音',
-						      url: 'http://phone.com'
-						    }
-						  ]
-						}
-						},
-						newsList: [
-						// {
-						// 	title: '流量统计',
-						// 	url: 'http://www.baidu.com',
-						// 	hot: true
-						// },{
-						// 	title: '流量统计',
-						// 	url: 'http://www.baidu.com'	  
-						// },{
-						// 	title: '流量统计',
-						// 	url: 'http://www.baidu.com'	  
-						// },{
-						// 	title: '流量统计',
-						// 	url: 'http://www.baidu.com',
-						// 	hot: true
-						// }
-						],
-						boardList: [
-						{
-						title: '开放产品',
-						description: '开放产品是一款开放产品',
-						toKey: 'analysis',
-						saleout: false
-						},
-						{
-						title: '品牌营销',
-						description: '品牌营销帮助你的产品更好地找到定位',
-						toKey: 'count',
-						saleout: false
-						},
-						{
-						title: '使命必达',
-						description: '使命必达快速迭代永远保持最前端的速度',
-						toKey: 'forecast',
-						saleout: true
-						},
-						{
-						title: '勇攀高峰',
-						description: '帮你勇闯高峰，到达事业的顶峰',
-						toKey: 'publish',
-						saleout: false
-						}
-						],
-						slides: [
-							{
-								src: require('../assets/slideShow/pic1.jpg'),
-								title: 'xxx1',
-								href: 'detail/analysis'
-							},
-							{
-								src: require('../assets/slideShow/pic2.jpg'),
-								title: 'xxx2',
-								href: 'detail/count'
-							},
-							{
-								src: require('../assets/slideShow/pic3.jpg'),
-								title: 'xxx3',
-								href: 'http://xxx.xxx.com'
-							},
-							{
-								src: require('../assets/slideShow/pic4.jpg'),
-								title: 'xxx4',
-								href: 'detail/forecast'
-							}
-						]
+			productList: {
+			pc: {
+			  title: 'PC产品',
+			  list: [
+			    {
+			      name: '数据统计',
+			      url: 'http://starcraft.com'
+			    },
+			    {
+			      name: '数据预测',
+			      url: 'http://warcraft.com'
+			    },
+			    {
+			      name: '流量分析',
+			      url: 'http://overwatch.com',
+			      hot: true
+			    },
+			    {
+			      name: '广告发布',
+			      url: 'http://hearstone.com'
+			    }
+			  ]
+			},
+			app: {
+			  title: '手机应用类',
+			  last: true,
+			  list: [
+			    {
+			      name: '91助手',
+			      url: 'http://weixin.com'
+			    },
+			    {
+			      name: '产品助手',
+			      url: 'http://twitter.com',
+			      hot: true
+			    },
+			    {
+			      name: '智能地图',
+			      url: 'http://maps.com'
+			    },
+			    {
+			      name: '团队语音',
+			      url: 'http://phone.com'
+			    }
+			  ]
+			}
+			},
+			newsList: [
+			// {
+			// 	title: '流量统计',
+			// 	url: 'http://www.baidu.com',
+			// 	hot: true
+			// },{
+			// 	title: '流量统计',
+			// 	url: 'http://www.baidu.com'	  
+			// },{
+			// 	title: '流量统计',
+			// 	url: 'http://www.baidu.com'	  
+			// },{
+			// 	title: '流量统计',
+			// 	url: 'http://www.baidu.com',
+			// 	hot: true
+			// }
+			],
+			boardList: [
+			{
+			title: '开放产品',
+			description: '开放产品是一款开放产品',
+			toKey: 'analysis',
+			saleout: false
+			},
+			{
+			title: '品牌营销',
+			description: '品牌营销帮助你的产品更好地找到定位',
+			toKey: 'count',
+			saleout: false
+			},
+			{
+			title: '使命必达',
+			description: '使命必达快速迭代永远保持最前端的速度',
+			toKey: 'forecast',
+			saleout: true
+			},
+			{
+			title: '勇攀高峰',
+			description: '帮你勇闯高峰，到达事业的顶峰',
+			toKey: 'publish',
+			saleout: false
+			}
+			],
+			slides: [
+				{
+					src: require('../assets/slideShow/pic1.jpg'),
+					title: 'xxx1',
+					href: 'detail/analysis'
+				},
+				{
+					src: require('../assets/slideShow/pic2.jpg'),
+					title: 'xxx2',
+					href: 'detail/count'
+				},
+				{
+					src: require('../assets/slideShow/pic3.jpg'),
+					title: 'xxx3',
+					href: 'http://xxx.xxx.com'
+				},
+				{
+					src: require('../assets/slideShow/pic4.jpg'),
+					title: 'xxx4',
+					href: 'detail/forecast'
+				}
+			]
 	   }
 	},
 	created: function() {

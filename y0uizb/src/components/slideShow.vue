@@ -91,7 +91,9 @@ export default {
 }
 .slide-trans-old-leave-active {
   transition: all .5s;
-  transform: translateX(-900px);
+}
+.slide-trans-old-leave-to{
+   transform: translateX(-900px);
 }
 .slide-show {
   position: relative;

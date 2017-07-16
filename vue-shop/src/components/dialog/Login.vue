@@ -13,7 +13,7 @@
         <span class="g-form-label">密码：</span>
         <div class="g-form-input">
           <input type="password" 
-          v-model="passwordModel" placeholder="请输入密码">
+          v-model="passwordModel" placeholder="请输入密码" @keydown.enter='onLogin'>
         </div>
         <span class="g-form-error">{{ passwordErrors.errorText }}</span>
       </div>

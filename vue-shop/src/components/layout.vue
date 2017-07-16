@@ -38,13 +38,14 @@
       <p>注册</p>
     </v-dialog>
     <v-dialog :isShow='isAboutDialog' @dialogClose='dialogClose' :name="'isAboutDialog'">
-      <p>关于</p>
+      <v-about></v-about>
     </v-dialog>
 	</div>
 </template>
 <script>
 import dialog from '@/components/dialog/dialog';
-import login from '@/components/Login';
+import login from '@/components/dialog/Login';
+import about from '@/components/dialog/about';
 export default {
   data() {
     return {
@@ -85,7 +86,8 @@ export default {
   },
   components: {
     'v-dialog': dialog,
-    'v-login': login
+    'v-login': login,
+    'v-about': about
   }
 }
 </script>

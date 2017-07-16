@@ -1,13 +1,13 @@
 <template>
-   <div>
-    <div class="dialog-warp">
-      <div class="dialog-cover" @click="closeMyslef" v-if='isShow'>
+   <div >
+    <div class="dialog-warp" >
       <transition name='drop'>
         <div class="dialog-content" v-if='isShow'>
           <p class="dialog-close" @click="closeMyslef">x</p>
           <slot>Empty</slot>
         </div>
       </transition>
+      <div class="dialog-cover" @click="closeMyslef" v-if='isShow'>
       </div>
     </div>
    </div> 
@@ -41,12 +41,14 @@ export default {
 }
 </script>
 <style scoped>
-.drop-enter-active,.drop-leave-active{
+.drop-enter-active,
+.drop-leave-active{
   -webkit-transition: all 0.5s;
   -o-transition: all 0.5s;
   transition: all 0.5s;
 }
-.drop-enter,.drop-leave-to{
+.drop-enter,
+.drop-leave-to{
   -webkit-transform: translateY(-500px);
   -ms-transform: translateY(-500px);
   -o-transform: translateY(-500px);

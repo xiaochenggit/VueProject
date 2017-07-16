@@ -26,6 +26,7 @@ export default {
 		}
 	},
 	created() {
+    // 找到产品
 		this.$http.get('/api/products')
 		.then((data) => {
    			this.products = data.body;
@@ -35,6 +36,7 @@ export default {
 	},
 	computed: {
 		productIcon() {
+      // 找到当前路由中产品对应的 icon
 			const productName = this.$route.params.product;
 			if (productName) {
 				return require("../assets/images/"+productName+".png");

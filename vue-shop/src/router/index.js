@@ -14,8 +14,8 @@ export default new Router({
   	},{
   		path: '/detail',
   		component: DetailPage,
-  		redirect:'/detail/count',
-  		children: [
+  		redirect:'/detail/count', // 重定向
+  		children: [ // 子路由
   			{
   				path: ':product',
   				component: DetailChild

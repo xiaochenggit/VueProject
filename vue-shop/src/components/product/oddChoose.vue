@@ -20,6 +20,12 @@
 						"value": 0
 					}]
 				}
+			},
+			typeName: {
+				type: String,
+				default() {
+					return ""
+				}
 			}
 		},
 		data() {
@@ -38,6 +44,7 @@
 		methods: {
 			changeIndex(index) {
 				this.nowIndex = index;
+				this.$emit("on-change", this.typeName, this.nowIndex);
 			}
 		}
 	}

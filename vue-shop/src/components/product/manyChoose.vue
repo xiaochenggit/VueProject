@@ -19,6 +19,12 @@
 						"value": 0
 					}]
 				}
+			},
+			typeName: {
+				type: String,
+				default() {
+					return ""
+				}
 			}
 		},
 		data() {
@@ -45,9 +51,11 @@
 				if (num === -1) {
 					this.indexArr.push(index);
 				} else {
-					this.indexArr.splice(num,1);
+					if (this.indexArr.length > 1) {
+						this.indexArr.splice(num,1);
+					}
 				}
-				this.$emit("on-change", this.indexArr)
+				this.$emit("on-change", this.typeName, this.indexArr)
 			}
 		}
 	}

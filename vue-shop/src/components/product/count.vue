@@ -75,7 +75,7 @@
 			 * [number 监控 number 发生变化就向父组件传值]
 			 */
 			number() {
-				this.$emit('on-change', this.number)
+				this.$emit('on-change','buyNum',this.number)
 			}
 		}
 	}

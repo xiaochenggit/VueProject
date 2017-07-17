@@ -10,7 +10,7 @@
                   购买数量：
               </div>
               <div class="sales-board-line-right">
-                  <v-count :max="des.buyNum.max" :min="des.buyNum.min"></v-count>
+                  <v-count :max="des.buyNum.max" :min="des.buyNum.min" @on-change="change"></v-count>
               </div>
           </div>
           <div class="sales-board-line">
@@ -18,7 +18,7 @@
                   产品类型：
               </div>
               <div class="sales-board-line-right">
-                  <odd-choose :selections="des.buyTypes"></odd-choose>
+                  <odd-choose :selections="des.buyTypes" :typeName="'buyType'" @on-change='change'></odd-choose>
               </div>
           </div>
           <div class="sales-board-line" v-if='des.districts'>
@@ -26,7 +26,7 @@
                   适用地区：
               </div>
               <div class="sales-board-line-right">
-                  <odd-select :selections="des.districts"></odd-select>
+                  <odd-select :selections="des.districts" :typeName="'district'" @on-change='change'></odd-select>
               </div>
           </div>
           <div class="sales-board-line">
@@ -34,7 +34,7 @@
                   有效时间：
               </div>
               <div class="sales-board-line-right">
-                  <odd-select :selections="des.periodList"></odd-select>
+                  <odd-select :selections="des.periodList" :typeName="'period'" @on-change='change'></odd-select>
               </div>
           </div>
           <div class="sales-board-line" v-if="des.versionList">
@@ -42,7 +42,7 @@
                   产品版本：
               </div>
               <div class="sales-board-line-right">
-                  <manyChoose :selections="des.versionList"></manyChoose>
+                  <manyChoose :selections="des.versionList" :typeName="'version'" @on-change='change'></manyChoose>
               </div>
           </div>
           <div class="sales-board-line" v-if="des.medium">
@@ -50,7 +50,7 @@
                   媒介：
               </div>
               <div class="sales-board-line-right">
-                  <manyChoose :selections="des.medium"></manyChoose>
+                  <manyChoose :selections="des.medium" :typeName="'medium'" @on-change='change'></manyChoose>
               </div>
           </div>
           <div class="sales-board-line">
@@ -146,6 +146,23 @@ export default {
 			if (product) {
 				this.buyNum = product.des.buyNum ? product.des.buyNum.min : 0;
 			}
+		},
+		change(key,value){
+			this[key] = value;
+			var parms = {
+				buyNum: this.buyNum,
+				buyType: this.buyType,
+				district: this.district,
+				period: this.period,
+				version: this.version,
+				medium: this.medium
+			}
+			this.$http.post("/product/" + this.$route.params.product,parms)
+			.then(function(data){
+				console.log(data);
+			},function(error){
+				console.log(error)
+			})
 		}
 	},
 	computed: {

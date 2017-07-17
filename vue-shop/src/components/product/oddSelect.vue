@@ -1,11 +1,11 @@
 <template>
-	<div class="selection-component">
+	<div class="selection-component" @mouseleave="isDrop = false">
 		<div class="selection-show" @click='toggleDrop'>
 			<span>{{selections[nowIndex].label}}</span>
-			<div class="arrow"></div>
+			<div class="arrow" v-if="selections.length > 1"></div>
 		</div>
 		<transition name='drop'>
-      <div class="selection-list" v-if="isDrop">
+      <div class="selection-list" v-if="isDrop&& selections.length > 1">
         <ul>
           <li v-for='(item,index) in selections' 
           @click="changeIndex(index)" >
@@ -27,7 +27,13 @@
 						"value": 0
 					}]
 				}
-			}
+			},
+      typeName: {
+        type: String,
+        default() {
+          return "1"
+        }
+      }
 		},
 		data() {
 			/**
@@ -52,7 +58,7 @@
       changeIndex(index) {
         this.nowIndex = index;
         this.isDrop = false;
-        this.$emit('on-change', this.nowIndex);
+        this.$emit('on-change', this.typeName, this.nowIndex);
       },
       /**
        * [toggleDrop 切换下拉框隐藏状态]
@@ -72,7 +78,7 @@
 }
 .drop-enter,
 .drop-leave-to{
-  opacity: 0;
+  opacity: 0.2;
 }
 .selection-component {
   position: relative;

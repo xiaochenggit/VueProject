@@ -34,8 +34,7 @@
                   有效时间：
               </div>
               <div class="sales-board-line-right">
-              	  <div v-if="typeof des.periodList === 'string'">{{des.periodList}}</div>
-                  <odd-select :selections="des.periodList" v-else></odd-select>
+                  <odd-select :selections="des.periodList"></odd-select>
               </div>
           </div>
           <div class="sales-board-line" v-if="des.versionList">
@@ -107,8 +106,23 @@ export default {
 		'v-count': count
 	},
 	data() {
+		/**
+		 * @param {Array} products [所有产品信息数组,请求获得]
+		 * @param {Number} buyNum [购买数量 默认为 0 请求之后更新为最小购买量]
+		 * @param {Number} buyType [产品类型 默认为 0 路由改变之后变成 0]
+		 * @param {Number} district [使用地区]
+		 * @param {Number} [period] [有效时间]
+		 * @param {Array} [version] [版本选择 默认 [0]]
+		 * @param {Array} [medium] [媒介选择 默认 [0]]
+		 */
 		return {
-			products:{}
+			products:[],
+			buyNum: 0,
+			buyType: 0,
+			district: 0,
+			period: 0,
+			version: [0],
+			medium: [0]
 		}
 	},
 	created() {
@@ -116,18 +130,30 @@ export default {
 		this.$http.get('/api/products')
 		.then((data) => {
 			this.products = data.body;
+			this.reMsg();
 		},(error) => {
 			console.log(error);
 		});
 	},
+	watch: {
+		'$route.params'() {
+			this.reMsg();
+		}
+	},
+	methods: {
+		reMsg(){
+			const product = this.products[this.$route.params.product];
+			if (product) {
+				this.buyNum = product.des.buyNum ? product.des.buyNum.min : 0;
+			}
+		}
+	},
 	computed: {
 		// 找到产品中的描述
 		des() {
-			return this.products[this.$route.params.product] ? this.products[this.$route.params.product].des :{};
+			const product = this.products[this.$route.params.product];
+				return product ? product.des :{};
 		}
-	},	
-	mounted() {
-		
 	}
 }
 </script>

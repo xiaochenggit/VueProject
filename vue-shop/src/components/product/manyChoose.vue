@@ -29,6 +29,11 @@
 				indexArr: [0]
 			}
 		},
+		watch: {
+			'$route.params'() {
+				this.indexArr = [0]
+			}
+		},
 		methods: {
 			/**
 			 * [toggleChoose 选择切换 判断选项是否被选中,如果选中切换不选中并且在数组中删除该下标,如果选项没有被选中,就添加该下标]

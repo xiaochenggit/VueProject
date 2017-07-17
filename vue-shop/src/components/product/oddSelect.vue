@@ -39,6 +39,12 @@
         isDrop: false
 			}
 		},
+    watch: {
+      "$route.params"() {
+        this.nowIndex = 0;
+        this.isDrop = false;
+      }
+    },
     methods: {
       /**
        * [changeIndex 改变当前选项 并且隐藏下拉框然后传值]

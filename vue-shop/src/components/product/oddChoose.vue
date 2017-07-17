@@ -30,6 +30,11 @@
 				nowIndex: 0
 			}
 		},
+		watch: {
+			'$route.params'() {
+				this.nowIndex = 0;
+			}
+		},
 		methods: {
 			changeIndex(index) {
 				this.nowIndex = index;

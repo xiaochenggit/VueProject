@@ -62,6 +62,12 @@
             }
         ]
     },
+    "price": {
+        "count": 100,
+        "forecast": 200,
+        "analysis": 300,
+        "publish": 400
+    },
     "products": {
         "count": {
             "name": "数据统计",

@@ -2,7 +2,7 @@
 	<div class="counter-component">
 		<div class="counter-btn" @click='mins'> - </div>
 		<div class="counter-show">
-			<input type="text" v-model='number' @keyup='inputNumber'>
+			<input type="text" v-model='number' @change='inputNumber'>
 		</div>
 		<div class="counter-btn" @click='add'> + </div>
 		<div v-show='false'>

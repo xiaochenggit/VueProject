@@ -58,7 +58,7 @@
                   总价：
               </div>
               <div class="sales-board-line-right">
-                  500 元
+                  {{price}}元
               </div>
           </div>
           <div class="sales-board-line">
@@ -114,6 +114,7 @@ export default {
 		 * @param {Number} [period] [有效时间]
 		 * @param {Array} [version] [版本选择 默认 [0]]
 		 * @param {Array} [medium] [媒介选择 默认 [0]]
+		 * @param {Number} [price] 选中商品金额
 		 */
 		return {
 			products:[],
@@ -122,15 +123,14 @@ export default {
 			district: 0,
 			period: 0,
 			version: [0],
-			medium: [0]
+			medium: [0],
+			price: 0
 		}
 	},
 	created() {
-		// 获得产品
 		this.$http.get('/api/products')
 		.then((data) => {
 			this.products = data.body;
-			this.reMsg();
 		},(error) => {
 			console.log(error);
 		});
@@ -146,9 +146,15 @@ export default {
 			if (product) {
 				this.buyNum = product.des.buyNum ? product.des.buyNum.min : 0;
 			}
+			this.change();
 		},
 		change(key,value){
-			this[key] = value;
+			if (key) {
+				this[key] = value;
+			}
+			/**
+			 * [ 根据选项获得金额]
+			 */
 			var parms = {
 				buyNum: this.buyNum,
 				buyType: this.buyType,
@@ -157,9 +163,9 @@ export default {
 				version: this.version,
 				medium: this.medium
 			}
-			this.$http.post("/product/" + this.$route.params.product,parms)
+			this.$http.post("/api/price")
 			.then(function(data){
-				console.log(data);
+				this.price = data.body[this.$route.params.product] * (this.buyNum || 1);
 			},function(error){
 				console.log(error)
 			})
@@ -171,6 +177,9 @@ export default {
 			const product = this.products[this.$route.params.product];
 				return product ? product.des :{};
 		}
+	},
+	mounted() {
+		this.change();
 	}
 }
 </script>

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import IndexPage from '@/pages/IndexPage'
 import DetailPage from '@/pages/DetailPage'
 import DetailChild from '@/pages/DetailChild'
+import orderListPage from '@/pages/orderList'
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +22,9 @@ export default new Router({
   				component: DetailChild
   			}
   		]
-  	}
+  	},{
+      path: '/orderlist',
+      component: orderListPage
+    }
   ]
 })

@@ -1,4 +1,22 @@
 {   
+    "productTypes": [
+        {
+          "label": "数据统计",
+          "value": 0
+        },
+        {
+          "label": "数据预测",
+          "value": 1
+        },
+        {
+          "label": "流量分析",
+          "value": 2
+        },
+        {
+          "label": "广告发布",
+          "value": 3
+        }
+    ],
     "banks": [
           {
               "id": 201,

@@ -22,12 +22,19 @@
 import dialog from '@/components/dialog/dialog';
 export default {
 	props: {
+		/**
+		 * [isPlayChek 是否显示支付状态]
+		 */
 		isPlayChek: {
 			type: Boolean,
 			default() {
 				return false;
 			}
 		},
+		/**
+		 * [orderId 订单]
+		 * @type {Object}
+		 */
 		orderId: {
 			type: [String, Number],
 			default() {
@@ -36,6 +43,9 @@ export default {
 		}
 	},
 	data() {
+		/**
+		 * 支付成功或失败的控制器
+		 */
 		return {
 			isChekTrue: false,
 			isChekFalse: false
@@ -46,6 +56,9 @@ export default {
 			this[type] = false;
 		},
 		checkStatus() {
+			/**
+			 * [获取订单支付信息]
+			 */
 			this.$http.post('/api/checkStatus',{
 				'orderId': this.orderId
 			}).then((data) => {

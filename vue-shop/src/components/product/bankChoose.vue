@@ -10,18 +10,28 @@
 <script>
 export default {
 	data() {
+        /**
+         * @param {Number} [nowIndex] [当前支付银行数组下标 默认0]
+         * @param {banks} banks 支付银行数组 默认 []
+         */
 		return {
 			nowIndex: 0,
 			banks:[]
 		}
 	},
 	methods: {
+        /**
+         * [choose 每次切换之后 发送选择银行的id]
+         */
 		choose(index) {
 			this.nowIndex = index;
 			this.$emit('on-change','bank', this.banks[this.nowIndex].id);
 		}
 	},
 	mounted() {
+        /**
+         * 获得银行数组
+         */
 		this.$http.get('/api/banks')
 		.then((data)=>{
 			this.banks = data.body;

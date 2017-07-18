@@ -10,7 +10,7 @@
 	      </div>
 
 	      <div class="order-list-option">
-	        结束日期: <date-picker language="zh"  :format="'dd-MM-yy'"  :disabled="endState.disabled" :value="endState.disabled.to" v-on:selected="endDateCheck"></date-picker>
+	        结束日期: <date-picker language="zh"  :format="'dd-MM-yy'"  :disabled="endState.disabled"  v-on:selected="endDateCheck"></date-picker>
 	      </div>
 
 	      <div class="order-list-option">
@@ -18,16 +18,16 @@
 	        <input type="text" class="order-query" v-model.lazy='query'>
 	      </div>
 	    </div>
-	    <!-- <div class="order-list-table">
+	    <div class="order-list-table">
 	      <table>
 	        <tr>
-	          <th v-for="head in tableHeads" @click="changeOrderType(head)" :class="{active:head.active}">{{ head.label }}</th>
+	          <th v-for="(head,index) in tableHeads" :class="{'active': head.active}" @click="changeOrderType(index)">{{head.label}}</th>
 	        </tr>
-	        <tr v-for="item in tableData" :key="item.period">
-	          <td v-for="head in tableHeads">{{ item[head.key] }}</td>
+	        <tr v-for="item in tableData">
+	          <td v-for="head in tableHeads" :class="{'active': head.active}">{{ item[head.key] }}</td>
 	        </tr>
 	      </table>
-	    </div> -->
+	    </div>
 	  </div>
 </template>
 <script>
@@ -42,6 +42,9 @@ export default {
 		 * @param {Date} [endDate] [结束时间 endDate]
 		 * @param {Object} startState [开始时间日历 参数]
 		 * @param {Object} endState [结束时间日历 参数]
+		 * @param {string} query 过渡信息
+		 * @param {Array} tableHeads 订单表格头部信息
+		 * @param {Array} tableData 订单数组（过滤后 请求获得）
 		 */
 		return {
 			productTypes:[],
@@ -60,7 +63,38 @@ export default {
 			        days: [], // Disable Saturday's and Sunday's
 			    }
 			},
-			query: ''
+			query: '',
+			tableHeads: [{
+		          label: '订单号',
+		          key: 'orderId',
+		          active: false
+		        },{
+		          label: '购买产品',
+		          key: 'product',
+		          active: false
+		        },{
+		          label: '版本类型',
+		          key: 'version',
+		          active: false
+		        },{
+		          label: '有效时间',
+		          key: 'period',
+		          active: false
+		        },{
+		          label: '购买日期',
+		          key: 'date',
+		          active: false
+		        },{
+		          label: '数量',
+		          key: 'buyNum',
+		          active: false
+		        },{
+		          label: '总价',
+		          key: 'amount',
+		          active: false
+		        }
+		     ],
+		    tableData:{},
 		}
 	},
 	methods: {
@@ -71,6 +105,7 @@ export default {
 		 */
 		change(type, value) {
 			this[type] = value;
+			this.getOrderList();
 		},
 		/**
 		 * [startDateCheck 开始时间日历选择]
@@ -78,20 +113,46 @@ export default {
 		startDateCheck(date) {
 			this.startDate = date;
 			this.endState.disabled.to = date;
-			this.endDate = date;
-			console.log(this.startDate, this.endDate);
+			this.getOrderList();
 		},
 		/**
 		 * [endDateCheck 结束时间日历选择]
 		 */
 		endDateCheck(date) {
 			this.endDate = date;
-			console.log(this.startDate, this.endDate);
-		}
+			this.getOrderList();
+		},
+		/**
+		 * [getOrderList 获得订单数组]
+		 */
+		getOrderList() {
+			let data = {
+				productType: this.productType,
+				query: this.query,
+				startDate: this.startDate,
+				endDate: this.endDate
+			};
+			this.$http.post('/api/getOrderList', data)
+			.then((res) => {
+				this.tableData = res.body.list;
+			},(err) => {
+				console.log(err);
+			})
+		},
+		/**
+		 * [changeOrderType 点击头部切换样式]
+		 */
+		changeOrderType (index) {
+	      this.tableHeads.map((item) => {
+	        item['active'] = false
+	        return item
+	      })
+	      this.tableHeads[index]['active'] = true;
+	  	}
 	},
 	watch: {
 		query() {
-			console.log(this.query);
+			this.getOrderList();
 		}
 	},
 	mounted() {
@@ -101,7 +162,8 @@ export default {
 			this.productTypes = data.body;
 		},(error) => {
 			console.log(error)
-		})
+		});
+		this.getOrderList();
 	},
 	components: {
 		oddSelect,
@@ -154,7 +216,11 @@ export default {
   border: 1px solid #4fc08d;
   cursor: pointer;
 }
-.order-list-table th.active {
+.order-list-table th.active{
   background: #35495e;
-}	
+}
+.order-list-table td.active{
+	background-color: #CCC;
+}
+
 </style>

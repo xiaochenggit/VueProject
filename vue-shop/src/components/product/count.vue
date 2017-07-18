@@ -46,16 +46,19 @@
 			}
 		},
 		methods: {
+			// 增加
 			add() {
 				if (this.number < this.max) {
 					this.number ++;
 				}
 			},
+			// 减少
 			mins() {
 				if (this.number > this.min) {
 					this.number --;
 				}
 			},
+			// 输入设定
 			inputNumber() {
 				let fix;
 				if (typeof this.number === 'string') {

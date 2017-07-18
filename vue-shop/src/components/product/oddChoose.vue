@@ -37,6 +37,7 @@
 			}
 		},
 		watch: {
+			// 路由变化重置参数
 			'$route.params'() {
 				this.nowIndex = 0;
 			}

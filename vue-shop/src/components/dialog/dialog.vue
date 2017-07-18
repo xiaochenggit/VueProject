@@ -53,6 +53,7 @@ export default {
   -ms-transform: translateY(-500px);
   -o-transform: translateY(-500px);
   transform: translateY(-500px);
+  opacity: 0;
 }
 .dialog-wrap {
   position: fixed;

@@ -36,12 +36,13 @@ export default {
 	},
 	computed: {
 		productIcon() {
-      // 找到当前路由中产品对应的 icon
+      // 找到当前路由中产品对应的 icon  没有这个产品就跳转页面啦
 			const productName = this.$route.params.product;
-			if (productName) {
+			if (productName && this.products[productName]) {
 				return require("../assets/images/"+productName+".png");
-			}
-			return require('../assets/images/count.png');
+			} else {
+        this.$router.push({ path: '/detail' });
+      }
 		}
 	}
 }

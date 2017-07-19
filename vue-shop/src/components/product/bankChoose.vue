@@ -3,7 +3,7 @@
 		<ul class="chooser-list">
 			<li v-for='(item,index) in banks' 
 			:class="[item.name, {active: index === nowIndex}]" 
-			@click='choose(index)'></li>
+			@click='choose(index)' :key="index"></li>
 		</ul>
 	</div>
 </template>

@@ -1,6 +1,6 @@
 <template>
-	<div class="selection-component" @mouseleave="isDrop = false">
-		<div class="selection-show" @click='toggleDrop'>
+	<div class="selection-component" >
+		<div class="selection-show" @click.stop='toggleDrop'>
 			<span>{{selections[nowIndex].label}}</span>
 			<div class="arrow" v-if="selections.length > 1"></div>
 		</div>
@@ -17,6 +17,7 @@
 	</div>
 </template>
 <script>
+import {bus} from '../../bus';
 	export default {
 		props: {
 			selections: {
@@ -58,7 +59,6 @@
        */
       changeIndex(index) {
         this.nowIndex = index;
-        this.isDrop = false;
         this.$emit('on-change', this.typeName, this.nowIndex);
       },
       /**
@@ -67,6 +67,11 @@
       toggleDrop() {
         this.isDrop = !this.isDrop;
       }
+    },
+    mounted() {
+      bus.$on('resetComponent',() => {
+        this.isDrop = false;
+      })
     }
 	}
 </script>

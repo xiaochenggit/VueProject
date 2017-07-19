@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div @click='resetComponent'>
 	  <div class="app-head">
 	    <div class="app-head-inner">
 	      <router-link :to="{path: '/'}">
@@ -46,13 +46,19 @@
 import dialog from '@/components/dialog/dialog';
 import login from '@/components/dialog/Login';
 import about from '@/components/dialog/about';
+import { bus } from '../bus';
 export default {
   data() {
     return {
       isLoginDialog: false,
       isRegDialog: false,
       isAboutDialog: false,
-      user: {}
+      //user: {}
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.getUser;
     }
   },
   methods: {
@@ -72,16 +78,18 @@ export default {
     },
     // 用户登录
     onLogin(user) {
-      this.$set(this,'user',user);
+      this.$store.dispatch('fetchUserLogin');
+      // this.$set(this,'user',user);
     },
     // 用户退出
     goOut() {
-      this.$http.post('/api/login')
-      .then((data) => {
-        this.user = {};
-      }, (error) => { 
-        console.log(error);
-      })
+      this.$store.dispatch('fetchUserLogout');
+    },
+    /**
+     * [resetComponent 全局关闭下拉框]
+     */
+    resetComponent() {
+      bus.$emit('resetComponent');
     }
   },
   components: {

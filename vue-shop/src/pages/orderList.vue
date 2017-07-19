@@ -93,8 +93,13 @@ export default {
 		          key: 'amount',
 		          active: false
 		        }
-		     ],
-		    tableData:{},
+		     ]
+		    //tableData:[]
+		}
+	},
+	computed: {
+		tableData() {
+			return this.$store.getters.getOrderList;
 		}
 	},
 	methods: {
@@ -132,12 +137,8 @@ export default {
 				startDate: this.startDate,
 				endDate: this.endDate
 			};
-			this.$http.post('/api/getOrderList', data)
-			.then((res) => {
-				this.tableData = res.body.list;
-			},(err) => {
-				console.log(err);
-			})
+			this.$store.commit('upDateParams', data);
+			this.$store.dispatch('fetchOrderList');
 		},
 		/**
 		 * [changeOrderType 点击头部切换样式]
@@ -164,6 +165,7 @@ export default {
 			console.log(error)
 		});
 		this.getOrderList();
+		this.$store.dispatch('fetchOrderList');
 	},
 	components: {
 		oddSelect,

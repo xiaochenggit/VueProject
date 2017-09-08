@@ -1,6 +1,7 @@
 <template>
   <div class="goodList">
     <nav-header></nav-header>
+    <nav-bread></nav-bread>
     <div class="main">
       <p>{{ msg }}</p>
     </div>
@@ -10,6 +11,7 @@
 <script>
 import NavHeader from '@/components/Header'
 import NavFooter from '@/components/Footer'
+import NavBread from '@/components/Bread'
 export default {
   name: 'GoodList',
   data () {
@@ -19,7 +21,8 @@ export default {
   },
   components: {
     NavHeader,
-    NavFooter
+    NavFooter,
+    NavBread
   }
 }
 </script>

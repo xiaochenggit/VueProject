@@ -1,23 +1,36 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import './css/normalize.css'
 export default {
   name: 'app'
 }
 </script>
 
 <style>
+html {
+  height: 100%;
+}
+body {
+  position: relative;
+  font-size: 12px;
+  min-height: 100%;
+}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: Arial , 'Avenir', Helvetica,  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+.public {
+  width: 1380px;
+  margin: 0 auto;
+}
+p {
+  margin: 0px;
 }
 </style>

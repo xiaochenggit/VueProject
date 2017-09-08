@@ -1,7 +1,6 @@
 <template>
   <div class="cart">
       {{ msg }}
-      <p>{{$route.query.goodsId}}</p>
   </div>
 </template>
 <script>

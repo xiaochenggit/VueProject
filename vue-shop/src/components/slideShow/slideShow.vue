@@ -12,7 +12,7 @@
 			<h2>{{slides[nowIndex].title}}</h2>
 			<ul class="slide-pages">
 				<li @click="goto(preIndex)">&lt;</li>
-				<li v-for='index in slides.length'>
+				<li v-for='index in slides.length' :key="index">
 					<a :class="{on:index - 1 === nowIndex}" @click="goto(index - 1)">{{index}}</a>
 				</li>
 				<li @click="goto(nextIndex)">&gt;</li>

@@ -49,163 +49,9 @@
       <div class="sales-board-des">
         <h2>产品说明</h2>
         <p>历史资料、科学实验、检验、统计等所获得的和用于科学研究、技术设计、查证、决策等的数值加以统计为解决方案做前期准备。</p>
-
-        <table class="sales-board-table">
+        <table class="sales-board-table" v-if='des.table'>
           <tbody>
               <tr class="ui-table-row">
-                  <td class="col-first">
-                      <div class="intro-pic">
-                          <label>安全安保</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>办公文教</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>彩票</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>车辆物流</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>成人用品</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>出版传媒</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>电脑硬件</label>
-                      </div>
-                  </td>
-              </tr>
-              <tr class="ui-table-row">
-                  <td class="col-first">
-                      <div class="intro-pic">
-                          <label>电子电工</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>房地产建筑装修</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>分类平台</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>服装鞋帽</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>箱包饰品</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>化工原料制品</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>机械设备</label>
-                      </div>
-                  </td>
-              </tr>
-              <tr class="ui-table-row">
-                  <td class="col-first">
-                      <div class="intro-pic">
-                          <label>家庭日用品</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>家用电器</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>教育培训</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>节能环保</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>金融服务</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>礼品</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>旅游住宿</label>
-                      </div>
-                  </td>
-              </tr>
-              <tr class="ui-table-row">
-                  <td class="col-first">
-                      <div class="intro-pic">
-                          <label>美容化妆</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>母婴护理</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>农林牧渔</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>软件</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>商务服务</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>生活服务</label>
-                      </div>
-                  </td>
-                  <td>
-                      <div class="intro-pic">
-                          <label>食品保健品</label>
-                      </div>
-                  </td>
-              </tr>
-              <tr class="ui-table-row">
-                  <td class="col-first">
-                      <div class="intro-pic">
-                          <label>手机数码</label>
-                      </div>
-                  </td>
                   <td>
                       <div class="intro-pic">
                           <label>通讯服务设备</label>
@@ -291,7 +137,7 @@ export default {
         {
           label: '重庆',
           value: 5
-        },
+        }
       ]
     }
   }

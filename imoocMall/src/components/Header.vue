@@ -1,7 +1,9 @@
 <template>
   <header>
     <div class="public">
-      <img src="../assets/logo_new.png" alt="logo">
+      <router-link to="/">
+        <img src="../assets/logo_new.png" alt="logo">
+      </router-link>
       <div class="userBox">
         <span>登录</span>|<span>注册</span>
         <span class="iconfont icon-gouwuche"></span>

@@ -27,10 +27,14 @@ body {
   color: #2c3e50;
 }
 .public {
-  width: 1380px;
+  width: 1300px;
   margin: 0 auto;
 }
 p {
   margin: 0px;
+}
+.main {
+    padding-top: 4.4rem;
+    padding-bottom: 2rem;
 }
 </style>

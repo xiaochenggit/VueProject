@@ -33,8 +33,25 @@ body {
 p {
   margin: 0px;
 }
+ul {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
 .main {
     padding-top: 4.4rem;
     padding-bottom: 2rem;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
 }
 </style>

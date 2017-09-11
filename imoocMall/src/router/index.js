@@ -4,9 +4,16 @@ import VueResource from 'vue-resource'
 // import Hello from '@/components/Hello'
 import GoodList from '@/views/GoodList'
 import Cart from '@/views/Cart'
+import VueLazyload from 'vue-lazyload'
 
 Vue.use(Router)
 Vue.use(VueResource)
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: '/static/dist/error.png',
+  loading: '/static/dist/loading.gif',
+  attempt: 1
+})
 
 export default new Router({
   routes: [

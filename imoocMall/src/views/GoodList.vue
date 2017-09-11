@@ -12,18 +12,25 @@
       </div>
       <div class='goodlist-main public'>
         <div class='left goodlist-body-nav'>
-          <ul>
+          <ul class="price-filter">
             <h2>Price</h2>
-            <li>All</li>
-            <li>0 - 100</li>
+            <li :class="{'cur': priceFilterCheck == 'All'}" 
+              @click="changePriceFilter('All')">
+              All
+            </li>
+            <li v-for="(price, index) in priceFilter" :key="index" 
+              :class="{'cur': priceFilterCheck == index}"
+               @click="changePriceFilter(index)">
+              {{ price.startPrice + '-' + price.endPrice }}
+            </li>
           </ul>
         </div>
         <div class='right goodlist-body'>
           <ul>
-            <li class="item" v-for="(item, index) in goodList">
-              <img src="../../static/1.jpg" :alt="item.productName">
+            <li class="item" v-for="(item, index) in goodList" :key="index">
+              <img v-lazy="'../../static/' + item.prodcutImg" :alt="item.productName">
               <p class="name">{{ item.productName }}</p>
-              <p class="price">{{ item.prodcutPrice }}</p>
+              <p class="price">{{ item.prodcutPrice|priceFilter }}</p>
               <button class='btn cartBtn'>加入购物车</button>
             </li>
           </ul>
@@ -42,7 +49,18 @@ export default {
   name: 'GoodList',
   data () {
     return {
-      goodList: []
+      goodList: [],
+      priceFilter: [{
+        startPrice: '0.00',
+        endPrice: '500.00'
+      }, {
+        startPrice: '500.00',
+        endPrice: '1000.00'
+      }, {
+        startPrice: '1000.00',
+        endPrice: '2000.00'
+      }],
+      priceFilterCheck: 'All'
     }
   },
   mounted () {
@@ -53,6 +71,16 @@ export default {
       axios.get('/goods').then(res => {
         this.goodList = res.data.result
       })
+    },
+    changePriceFilter (type) {
+      this.priceFilterCheck = type
+    }
+  },
+  filters: {
+    priceFilter (val) {
+      if (!val) return ''
+      val = val.toString()
+      return val + ' ¥'
     }
   },
   components: {
@@ -80,6 +108,19 @@ export default {
   .goodlist-main{
     overflow: hidden;
   }
+  .price-filter {
+    font-size: 1.1rem;
+    line-height: 1.6rem;
+  }
+  .price-filter li {
+    margin: 0.5rem 0px;
+    cursor: pointer;
+  }
+  .price-filter .cur {
+    border-left: 4px solid #f60;
+    color: #f60;
+    text-indent: 1rem;
+  }
   .goodlist-body-nav {
     width: 220px;
   }
@@ -94,9 +135,14 @@ export default {
     margin: 1rem;
     padding-bottom: 1rem;
     cursor: pointer;
+    box-shadow: 1px 1px 8px 1px #ccc;
   }
   .item:hover {
-    box-shadow: -2px -2px 15px 3px #989090;
+    box-shadow: 1px 1px 8px 1px red;
+  }
+  .item img {
+    height: 220px;
+    width: 220px;
   }
   .item p {
     text-indent: 5%;

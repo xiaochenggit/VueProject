@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
 let Goods = require('../models/goods');
+let User = require('../models/user');
 
 // 连接MongoDB 数据库
 mongoose.connect('mongodb://localhost:27017/dumall');
@@ -18,7 +19,7 @@ mongoose.connection.on('disconnected', () => {
     console.log('MongoDB connected disconnected');
 });
 
-/* GET goods page. */
+/* 商品列表 */
 router.get('/', (req, res, next) => {
     /**
      * {Number} page 页码 默认1
@@ -59,6 +60,77 @@ router.get('/', (req, res, next) => {
                 list: docs
             });
         }
+    })
+});
+
+// 加入到购物车
+router.post('/addCart', (req, res, next) => {
+    let productId = req.body.productId;
+    let userId = '1';
+    User.findOne({ userId }, (err, user) => {
+       if (err) {
+            res.json({
+                status: 400,
+                msg: err.message
+            });
+       } else {
+           if (user) {
+               let isUserHave = false;
+               user.cartList.forEach((item) => {
+                 if(item.productId == productId) {
+                     isUserHave = true;
+                     item.productNum ++
+                     return;
+                 }
+               });
+               user.save((err) => {
+                    if (err) {
+                        res.json({
+                            status: 400,
+                            msg: err.message
+                        });
+                    } else {
+                        res.json({
+                            status: 200,
+                            msg: '添加购物车成功!'
+                        });
+                    }
+               });
+               if (!isUserHave) {
+                    Goods.findOne({ productId }, (err, good) => {
+                        if (err) {
+                            res.json({
+                                status: 400,
+                                msg: err.message
+                            });
+                        } else {
+                            if (good) {
+                                var newGood = {
+                                    ...good._doc,
+                                    checked: true,
+                                    productNum: 1
+                                };
+                                console.log(newGood);
+                                user.cartList.push(newGood);
+                                user.save((err) => {
+                                    if (err) {
+                                        res.json({
+                                            status: 400,
+                                            msg: err.message
+                                        });
+                                    } else {
+                                        res.json({
+                                            status: 200,
+                                            msg: '添加购物车成功!'
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    }); 
+                }
+           }
+       }
     })
 });
 

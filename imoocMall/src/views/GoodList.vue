@@ -35,7 +35,7 @@
               <img v-lazy="'../../static/' + item.prodcutImg" :alt="item.productName">
               <p class="name">{{ item.productName }}</p>
               <p class="price">{{ item.prodcutPrice|priceFilter }}</p>
-              <button class='btn cartBtn'>加入购物车</button>
+              <button class='btn cartBtn' @click="addCart(item.productId)">加入购物车</button>
             </li>
           </ul>
           <div class="load-more" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
@@ -150,6 +150,14 @@ export default {
         this.page ++
         this.getGoodsList(true)
       }, 500)
+    },
+    addCart (productId) {
+      axios.post('/goods/addCart', {
+        productId
+      }).then(res => {
+        let resData = res.data
+        alert(resData.msg)
+      })
     }
   },
   filters: {

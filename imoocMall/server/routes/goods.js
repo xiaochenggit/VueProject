@@ -20,7 +20,21 @@ mongoose.connection.on('disconnected', () => {
 
 /* GET goods page. */
 router.get('/', (req, res, next) => {
-    Goods.find({}, (err, docs) => {
+    /**
+     * {Number} page 页码 默认1
+     * {Number} pageSize 每页条目 默认10
+     * {Number} sort 排序方法 1 为升序 -1 为降序 默认升序
+     * skip 跳过的条目 (page - 1) * pageSize
+     */
+    let page = parseInt(req.query.page || 1);
+    let pageSize = parseInt(req.query.pageSize || 10);
+    let sort = req.query.sort || 1;
+    let skip = (page - 1) * pageSize;
+
+    // skip跳过条目 limit裁剪条目 sort 排序
+    Goods.find({}).skip(skip).limit(pageSize).sort({
+        'prodcutPrice': sort
+    }).exec((err,docs) => {
         if(err) {
             res.json({
                 status: 400,
@@ -34,7 +48,7 @@ router.get('/', (req, res, next) => {
                 list: docs
             });
         }
-    });
+    })
 });
 
 module.exports = router;

@@ -25,7 +25,7 @@
             <li v-for="(price, index) in priceFilter" :key="index" 
               :class="{'cur': priceFilterCheck == index}"
                @click="changePriceFilter(index)">
-              {{ price.startPrice + '-' + price.endPrice }}
+              {{ price.startPrice + '.00' + '-' + price.endPrice + '.00' }}
             </li>
           </ul>
         </div>
@@ -39,7 +39,7 @@
             </li>
           </ul>
           <div class="load-more" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-            正在加载...
+            <img src="../../static/loading-svg/loading-spin.svg" v-if="isLodingShow">
           </div>
         </div>
       </div>
@@ -71,16 +71,20 @@ export default {
       page: 1,
       pageSize: 8,
       priceFilter: [{
-        startPrice: '0.00',
-        endPrice: '500.00'
+        startPrice: 0,
+        endPrice: 500
       }, {
-        startPrice: '500.00',
-        endPrice: '1000.00'
+        startPrice: 500,
+        endPrice: 1000
       }, {
-        startPrice: '1000.00',
-        endPrice: '2000.00'
+        startPrice: 1000,
+        endPrice: 2000
+      }, {
+        startPrice: 2000,
+        endPrice: 5000
       }],
-      priceFilterCheck: 'All'
+      priceFilterCheck: 'All',
+      isLodingShow: false
     }
   },
   mounted () {
@@ -90,17 +94,20 @@ export default {
     /**
      * {Object} params 请求参数 sort排序 page页码 pageSize页面条目
      * {Boolean} flog 是否是下拉加载 下拉加载需要连接数组
+     * {Object or String } priceSection 价格区间 All 或者 {startPrice:xx , endPrice: xx}
      * 加载完数据之后根据 返回的条目来判断是否可以继续下拉加载
      */
     getGoodsList (flog) {
       let params = {
         sort: this.sortFlog ? 1 : -1,
         page: this.page,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        priceSection: this.priceFilterCheck === 'All' ? 'All' : JSON.stringify(this.priceFilter[this.priceFilterCheck])
       }
       axios.get('/goods', {
         params
       }).then(res => {
+        this.isLodingShow = false
         let resData = res.data
         if (resData.status === 200) {
           if (flog) {
@@ -118,16 +125,19 @@ export default {
     },
     /**
      * 改变商品价格区间
-     * {String or Number} type (all 或者 数组下标) 
+     * {String or Number} type (all 或者 数组下标)
      */
     changePriceFilter (type) {
       this.priceFilterCheck = type
+      this.page = 1
+      this.getGoodsList()
     },
     /**
      * 改变价格排序
      */
     sortPrice () {
       this.sortFlog = !this.sortFlog
+      this.page = 1
       this.getGoodsList()
     },
     /**
@@ -135,7 +145,7 @@ export default {
      * 上来加载数据 先变成不可加载 然后页码++ 运行商品请求函数
      */
     loadMore () {
-      this.busy = true
+      this.busy = this.isLodingShow = true
       setTimeout(() => {
         this.page ++
         this.getGoodsList(true)
@@ -252,7 +262,6 @@ export default {
     color: #f60;
   }
   .load-more {
-    height: 4rem;
     line-height: 4rem;
     text-align: center;
     font-size: 2rem;

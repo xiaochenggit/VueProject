@@ -69,7 +69,10 @@ export default {
   methods: {
     getGoodsList () {
       axios.get('/goods').then(res => {
-        this.goodList = res.data.result
+        let resData = res.data
+        if (resData.status === 200) {
+          this.goodList = resData.list
+        }
       })
     },
     changePriceFilter (type) {
@@ -115,8 +118,11 @@ export default {
   .price-filter li {
     margin: 0.5rem 0px;
     cursor: pointer;
+    -webkit-transition: text-indent 0.2s linear ;
+    -moz-transition: text-indent 0.2s linear ;
+    transition: text-indent 0.2s linear ;
   }
-  .price-filter .cur {
+  .price-filter li.cur {
     border-left: 4px solid #f60;
     color: #f60;
     text-indent: 1rem;
@@ -136,9 +142,13 @@ export default {
     padding-bottom: 1rem;
     cursor: pointer;
     box-shadow: 1px 1px 8px 1px #ccc;
+    -webkit-transition: transform 0.2s linear;
+    -moz-transition: transform 0.2s linear;
+    transition: transform 0.2s linear;
   }
   .item:hover {
     box-shadow: 1px 1px 8px 1px red;
+    transform: translate(0, -0.5rem);
   }
   .item img {
     height: 220px;

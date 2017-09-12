@@ -25,6 +25,7 @@
     box-shadow: 1px 1px 2px 2px #ccc;
     font-size: 1.2rem;
     background-color: #fff;
+    z-index: 100;
   }
   .userBox{
     float: right;

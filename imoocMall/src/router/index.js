@@ -5,7 +5,9 @@ import VueResource from 'vue-resource'
 import GoodList from '@/views/GoodList'
 import Cart from '@/views/Cart'
 import VueLazyload from 'vue-lazyload'
+import infiniteScroll from 'vue-infinite-scroll'
 
+Vue.use(infiniteScroll)
 Vue.use(Router)
 Vue.use(VueResource)
 Vue.use(VueLazyload, {

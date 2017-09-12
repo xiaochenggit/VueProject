@@ -6,7 +6,11 @@
       <div class='goodlist-nav'>
         <div class="public">
           <div class='right'>
-            SortBy: <span>Default</span><span>Price</span>
+            SortBy: 
+            <span class="sortBy">Default</span>
+            <span class="sortBy" @click="sortPrice">Price<span 
+              :class="['iconfont', {'icon-paixu1': sortFlog}, {'icon-paixu': !sortFlog}]"></span>
+            </span>
           </div>
         </div>
       </div>
@@ -34,6 +38,9 @@
               <button class='btn cartBtn'>加入购物车</button>
             </li>
           </ul>
+          <div class="load-more" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+            正在加载...
+          </div>
         </div>
       </div>
     </div>
@@ -49,7 +56,20 @@ export default {
   name: 'GoodList',
   data () {
     return {
+      /**
+       * {Array} goodList 商品数组 默认 []
+       * {Boolean} sortFlog 排序 默认 true
+       * {Boolean} busy 是否可以加载分页数据 默认 true (不许加载)
+       * {Number} page 分页 默认 1
+       * {Number} pageSize 每页条目 默认 8
+       * {Array} priceFilter 商品价格区间 默认 [...]
+       * {String or Number} priceFilterCheck 当前选中的商品价格区间 默认 All
+       */
       goodList: [],
+      sortFlog: true,
+      busy: true,
+      page: 1,
+      pageSize: 8,
       priceFilter: [{
         startPrice: '0.00',
         endPrice: '500.00'
@@ -67,19 +87,65 @@ export default {
     this.getGoodsList()
   },
   methods: {
-    getGoodsList () {
-      axios.get('/goods').then(res => {
+    /**
+     * {Object} params 请求参数 sort排序 page页码 pageSize页面条目
+     * {Boolean} flog 是否是下拉加载 下拉加载需要连接数组
+     * 加载完数据之后根据 返回的条目来判断是否可以继续下拉加载
+     */
+    getGoodsList (flog) {
+      let params = {
+        sort: this.sortFlog ? 1 : -1,
+        page: this.page,
+        pageSize: this.pageSize
+      }
+      axios.get('/goods', {
+        params
+      }).then(res => {
         let resData = res.data
         if (resData.status === 200) {
-          this.goodList = resData.list
+          if (flog) {
+            this.goodList = this.goodList.concat(resData.list)
+          } else {
+            this.goodList = resData.list
+          }
+          if (params.pageSize > resData.counts) {
+            this.busy = true
+          } else {
+            this.busy = false
+          }
         }
       })
     },
+    /**
+     * 改变商品价格区间
+     * {String or Number} type (all 或者 数组下标) 
+     */
     changePriceFilter (type) {
       this.priceFilterCheck = type
+    },
+    /**
+     * 改变价格排序
+     */
+    sortPrice () {
+      this.sortFlog = !this.sortFlog
+      this.getGoodsList()
+    },
+    /**
+     * 下拉加载
+     * 上来加载数据 先变成不可加载 然后页码++ 运行商品请求函数
+     */
+    loadMore () {
+      this.busy = true
+      setTimeout(() => {
+        this.page ++
+        this.getGoodsList(true)
+      }, 500)
     }
   },
   filters: {
+    /**
+     * 价格过滤器
+     */
     priceFilter (val) {
       if (!val) return ''
       val = val.toString()
@@ -104,7 +170,7 @@ export default {
     font-size: 1.2rem;
     line-height: 2.4rem;
   }
-  .goodlist-nav span {
+  .goodlist-nav .sortBy {
     cursor: pointer;
     margin: 0 1rem;
   }
@@ -132,6 +198,14 @@ export default {
   }
   .goodlist-body {
     width: 1080px;
+  }
+  .goodlist-body ul::after{
+    display: block;
+    content: '';
+    height: 0;
+    width: 0;
+    clear: both;
+    overflow: hidden;
   }
   .item {
     background-color: #fff;
@@ -173,6 +247,16 @@ export default {
   .cartBtn:hover {
     color: #f60;
     border-color: #f60;
+  }
+  .icon-paixu, .icon-paixu1 {
+    color: #f60;
+  }
+  .load-more {
+    height: 4rem;
+    line-height: 4rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
   }
 </style>
 

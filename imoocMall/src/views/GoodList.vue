@@ -43,6 +43,8 @@
           </div>
         </div>
       </div>
+        <vue-model :message='modelMessage' :isShow='isModel' @close='closeModel'>
+        </vue-model>
     </div>
     <nav-footer></nav-footer>
   </div>
@@ -51,6 +53,7 @@
 import NavHeader from '@/components/Header'
 import NavFooter from '@/components/Footer'
 import NavBread from '@/components/Bread'
+import VueModel from '../components/Model'
 import axios from 'axios'
 export default {
   name: 'GoodList',
@@ -84,7 +87,9 @@ export default {
         endPrice: 5000
       }],
       priceFilterCheck: 'All',
-      isLodingShow: false
+      isLodingShow: false,
+      modelMessage: '',
+      isModel: false
     }
   },
   mounted () {
@@ -156,8 +161,12 @@ export default {
         productId
       }).then(res => {
         let resData = res.data
-        alert(resData.msg)
+        this.modelMessage = resData.msg
+        this.isModel = true
       })
+    },
+    closeModel () {
+      this.isModel = false
     }
   },
   filters: {
@@ -173,7 +182,8 @@ export default {
   components: {
     NavHeader,
     NavFooter,
-    NavBread
+    NavBread,
+    VueModel
   }
 }
 </script>

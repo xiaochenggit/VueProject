@@ -74,4 +74,30 @@ router.get('/cheklogin', (req, res, next) => {
     })
   }
 });
+
+// 购物车列表
+router.get('/cartlist', (req, res, next) => {
+  let cookieUser = JSON.parse(req.cookies.dumall);
+  User.findOne(cookieUser, (err, user) => {
+    if (err) {
+      res.json({
+        status: 400,
+        msg: err.message 
+      })
+    } else {
+      if (user) {
+        res.json({
+          status: 200,
+          msg: '获取购物车列表成功!',
+          result: user.cartList
+        })
+      } else {
+        res.json({
+          status: 400,
+          msg: '请重新登录!'
+        })
+      }
+    }
+  })
+})
 module.exports = router;

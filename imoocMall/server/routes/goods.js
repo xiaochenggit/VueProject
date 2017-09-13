@@ -83,20 +83,21 @@ router.post('/addCart', (req, res, next) => {
                      return;
                  }
                });
-               user.save((err) => {
-                    if (err) {
-                        res.json({
-                            status: 400,
-                            msg: err.message
-                        });
-                    } else {
-                        res.json({
-                            status: 200,
-                            msg: '添加购物车成功!'
-                        });
-                    }
-               });
-               if (!isUserHave) {
+               if (isUserHave) {
+                    user.save((err) => {
+                        if (err) {
+                            res.json({
+                                status: 400,
+                                msg: err.message
+                            });
+                        } else {
+                            res.json({
+                                status: 200,
+                                msg: '添加购物车成功!'
+                            });
+                        }
+                    });
+               } else {
                     Goods.findOne({ productId }, (err, good) => {
                         if (err) {
                             res.json({
@@ -111,23 +112,16 @@ router.post('/addCart', (req, res, next) => {
                                     productNum: 1
                                 };
                                 user.cartList.push(newGood);
-                                user.save((err, user) => {
-                                    if (err) {
-                                        res.json({
-                                            status: 400,
-                                            msg: err.message
-                                        });
-                                    } else {
-                                        res.json({
-                                            status: 200,
-                                            msg: '添加购物车成功!'
-                                        });
-                                    }
+                                user.save(() => {
+                                    res.json({
+                                        status: 200,
+                                        msg: '添加购物车成功!'
+                                    });
                                 });
                             }
-                        }
+                        } 
                     }); 
-                }
+               }
            }
        }
     })

@@ -110,9 +110,8 @@ router.post('/addCart', (req, res, next) => {
                                     checked: true,
                                     productNum: 1
                                 };
-                                console.log(newGood);
                                 user.cartList.push(newGood);
-                                user.save((err) => {
+                                user.save((err, user) => {
                                     if (err) {
                                         res.json({
                                             status: 400,

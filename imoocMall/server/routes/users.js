@@ -42,4 +42,16 @@ router.post('/login', (req, res, next) => {
     }
   })
 });
+
+// 用户登出
+router.post('/logout', (req, res, next) => {
+  res.cookie('dumall', '', {
+    path: '/',
+    maxAge: -1
+  })
+  res.json({
+    status: 200,
+    msg: '用户登出成功！'
+  })
+})
 module.exports = router;

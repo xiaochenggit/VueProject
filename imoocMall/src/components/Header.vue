@@ -9,7 +9,7 @@
           <span @click="isUserLogin = true">登录</span>|<span @click="isUserRegister = true">注册</span>
         </div>
         <div class="login" v-else>
-          <span>{{nickName}}</span>|<span>登出</span>
+          <span>{{nickName}}</span>|<span @click="logOut">登出</span>
         </div>
         <span class="iconfont icon-gouwuche"></span>
       </div>
@@ -100,6 +100,13 @@
             this.nickName = resDate.result.userName
           } else {
             this.userErrTip = resDate.msg
+          }
+        })
+      },
+      logOut () {
+        axios.post('/users/logout').then(res => {
+          if (res.data.status === 200) {
+            this.nickName = ''
           }
         })
       }

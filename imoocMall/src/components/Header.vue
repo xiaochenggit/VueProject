@@ -109,7 +109,18 @@
             this.nickName = ''
           }
         })
+      },
+      checkLogin () {
+        axios.get('/users/cheklogin').then(res => {
+          let resData = res.data
+          if (resData.status === 200) {
+            this.nickName = JSON.parse(resData.result).userName
+          }
+        })
       }
+    },
+    mounted () {
+      this.checkLogin()
     },
     components: {
       VueModel

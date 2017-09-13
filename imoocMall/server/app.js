@@ -28,6 +28,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 登录拦截器 先判断是否有 cookie 在过滤某些不需要登录的请求
+app.use((req, res, next) => {
+  let path = req.path;
+  if(!req.cookies.dumall) {
+    if (path == '/goods' || 
+      path == '/users/login' || 
+      path == '/users/logout' || 
+      path == '/users/checklogin') {
+      next();
+    } else {
+      res.json({
+        status: 400,
+        msg: '请先登录!'
+      });
+    }
+  } else {
+    next()
+  }
+})
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/goods', goods);

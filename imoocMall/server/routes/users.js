@@ -21,7 +21,11 @@ router.post('/login', (req, res, next) => {
     } else {
       if (user) {
         // 登录成功写入 cookie name val { 地址 时间}
-        res.cookie('dumall', user.userId, {
+        var userCookie = {
+          userId: user.userId,
+          userName: user.userName
+        }
+        res.cookie('dumall', JSON.stringify(userCookie), {
           path: '/',
           maxAge: 1000 * 60 * 60 * 1
         })
@@ -53,5 +57,21 @@ router.post('/logout', (req, res, next) => {
     status: 200,
     msg: '用户登出成功！'
   })
-})
+});
+
+// 验证是否登录
+router.get('/cheklogin', (req, res, next) => {
+  if (req.cookies.dumall) {
+    res.json({
+      status: 200,
+      msg: '已登录!',
+      result: req.cookies.dumall
+    })
+  } else {
+    res.json({
+      status: 400,
+      msg: '未登录!'
+    })
+  }
+});
 module.exports = router;

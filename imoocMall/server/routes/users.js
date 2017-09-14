@@ -99,5 +99,30 @@ router.get('/cartlist', (req, res, next) => {
       }
     }
   })
-})
+});
+
+// 删除购物车商品
+router.post('/cart/delete', (req, res, next) => {
+  let cookieUser = JSON.parse(req.cookies.dumall);
+  let productId = req.body.productId || '';
+  User.update(cookieUser, {
+    $pull: {
+      cartList: {
+        productId: productId
+      }
+    }
+  }, (err, user) => {
+    if (err) {
+      res.json({
+        status: 400,
+        msg: err.message
+      });
+    } else {
+      res.json({
+        status: 200,
+        msg: '删除商品成功!'
+      });
+    }
+  })
+});
 module.exports = router;

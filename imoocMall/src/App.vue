@@ -54,4 +54,14 @@ ul {
   cursor: pointer;
   outline: none;
 }
+dl, dd{
+  padding: 0;
+  margin: 0;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
 </style>

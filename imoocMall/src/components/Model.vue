@@ -4,6 +4,7 @@
       <div class="model" v-if="isShow">
         <span class="iconfont icon-close" @click="close"></span>
         <h2>{{ message }}</h2>
+        <slot name="btngroup"></slot>
       </div>
       </transition>
       <div class="mark" @click="close" v-if="isShow">
@@ -143,5 +144,21 @@ export default {
   .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
     opacity: 0;
     top: -20rem;
+  }
+  .btngroup {
+    margin: 1rem 0px;
+  }
+  .btngroup .btn {
+    width: 40%;
+    border-radius: 0.2rem;
+  }
+  .btngroup .cancel {
+    background-color: #fff;
+    border-color: #ccc;
+    color: #333;
+  }
+  .btngroup .cancel:hover{
+    background-color: #ccc;
+    border-color: #333;
   }
 </style>

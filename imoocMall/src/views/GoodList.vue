@@ -176,7 +176,7 @@ export default {
     priceFilter (val) {
       if (!val) return ''
       val = val.toString()
-      return val + ' ¥'
+      return '¥' + val
     }
   },
   components: {

@@ -66,8 +66,8 @@ router.get('/', (req, res, next) => {
 // 加入到购物车
 router.post('/addCart', (req, res, next) => {
     let productId = req.body.productId;
-    let userId = '1';
-    User.findOne({ userId }, (err, user) => {
+    let cookieUser = JSON.parse(req.cookies.dumall);
+    User.findOne(cookieUser, (err, user) => {
        if (err) {
             res.json({
                 status: 400,
@@ -122,6 +122,11 @@ router.post('/addCart', (req, res, next) => {
                         } 
                     }); 
                }
+           } else {
+               res.json({
+                   status: '400',
+                   msg: '添加购物车失败!'
+               })
            }
        }
     })

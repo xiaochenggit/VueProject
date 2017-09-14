@@ -149,4 +149,35 @@ router.post('/cart/update', (req, res, next) => {
     }
   })
 });
+
+// 购物车商品全选
+router.post('/cart/checkall', (req, res, next) => {
+  let cookieUser = JSON.parse(req.cookies.dumall);
+  let checked = req.body.checked;
+  User.findOne(cookieUser, (err, user) => {
+    if (err) {
+      res.json({
+        status: 400,
+        msg: err.message
+      });
+    } else {
+      if (user) {
+        user.cartList.forEach((item) => {
+          item.checked = checked
+        })
+        user.save(() => {
+          res.json({
+            status: 200,
+            msg: checked ? '全选' : '取消全选' + '操作成功'
+          })
+        })
+      } else {
+        res.json({
+          status: 400,
+          msg: '没找到用户数据!'
+        });
+      }
+    }
+  })
+})
 module.exports = router;

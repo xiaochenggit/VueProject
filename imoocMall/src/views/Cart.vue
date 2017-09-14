@@ -9,9 +9,8 @@
           <div class="cart-dl">
             <dl>
               <dd class="check">
-                <label>
-                  <span class="iconfont icon-xuanze"></span>
-                  <input type="checkbox" class="checkbox"/>全选
+                <label @click="checkAll">
+                  <span :class="['iconfont','icon-xuanze', {'checked': isCheckAll }]"></span>全选
                 </label>
               </dd>
               <dd class="product">商品</dd>
@@ -46,15 +45,14 @@
           <div class="cart-dl">
             <dl>
               <dd class="check">
-                <label>
-                  <span class="iconfont icon-xuanze"></span>
-                  <input type="checkbox" class="checkbox"/>全选
+                <label @click="checkAll">
+                  <span :class="['iconfont','icon-xuanze', {'checked': isCheckAll }]"></span>全选
                 </label>
               </dd>
               <dd class="delete">删除选中的商品</dd>
               <dd class="product-check">已选择<span>1</span>件商品</dd>
               <div class="right">
-                <dd class="productPrice-all">总价：<span>28.00</span></dd>
+                <dd class="productPrice-all">总价：<span>{{getAllPrice | priceFilter}}</span></dd>
                 <dd><button class="btn">去结算</button></dd>
               </div>
             </dl>
@@ -116,11 +114,13 @@
             }
           })
         },
+        // 是否删除商品弹窗
         delProductConfirm (productId, index) {
           this.delProductId = productId
           this.delisModel = true
           this.delIndex = index
         },
+        // 删除商品
         delProduct () {
           this.delisModel = false
           axios.post('/users/cart/delete', {
@@ -134,6 +134,7 @@
             }
           })
         },
+        // 更新商品数据 是否选择 数量
         update (flag, item) {
           if (flag === 'add') {
             item.productNum ++
@@ -157,11 +158,49 @@
               item.checked = !item.checked
             }
           })
+        },
+        // 全选
+        checkAll () {
+          let flag = !this.isCheckAll
+          this.cartList.forEach((item) => {
+            item.checked = flag
+          })
+          axios.post('/users/cart/checkall', {
+            checked: flag
+          }).then(res => {
+            console.log(res.data.msg)
+          })
+        },
+        // 获得当前 选择商品数量 用于和所有商品数量比较 从而确定是否是全选状态
+        getCheckLength () {
+          let length = 0
+          this.cartList.forEach((item) => {
+            if (item.checked) {
+              length++
+            }
+          })
+          return length
+        }
+      },
+      computed: {
+        // 计算属性是否全选状态
+        isCheckAll () {
+          return this.getCheckLength() === this.cartList.length
+        },
+        // 获得所有选择商品价格
+        getAllPrice () {
+          let price = 0
+          this.cartList.forEach((item) => {
+            if (item.checked) {
+              price += item.productPrice * item.productNum
+            }
+          })
+          return price
         }
       },
       filters: {
         priceFilter (val) {
-          if (!val) return ''
+          if (!val) return '¥0'
           val = val.toString()
           return '¥' + val
         }

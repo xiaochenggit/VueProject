@@ -9,8 +9,8 @@ let userSchema = new Schema({
     "cartList": [{
         "productId": String,
         "productName": String,
-        "prodcutPrice": Number,
-        "prodcutImg": String,
+        "productPrice": Number,
+        "productImg": String,
         "checked": Boolean,
         "productNum": Number
     }],

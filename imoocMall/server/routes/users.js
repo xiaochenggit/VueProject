@@ -125,4 +125,28 @@ router.post('/cart/delete', (req, res, next) => {
     }
   })
 });
+
+// 更新购物车商品
+router.post('/cart/update', (req, res, next) => {
+  let cookieUser = JSON.parse(req.cookies.dumall);
+  let productId = req.body.productId;
+  let productNum = req.body.productNum;
+  let checked = req.body.checked;
+  User.update({ ...cookieUser, "cartList.productId": productId}, {
+    "cartList.$.productNum": productNum,
+    "cartList.$.checked": checked
+  }, (err) => {
+    if (err) {
+      res.json({
+        status: 400,
+        msg: err.message
+      });
+    } else {
+      res.json({
+        status: 200,
+        msg: '修改购物车商品信息成功！'
+      });
+    }
+  })
+});
 module.exports = router;

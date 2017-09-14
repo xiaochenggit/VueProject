@@ -25,19 +25,19 @@
           <div class="cart-main">
             <dl v-for="(item, key) in cartList" :key="key">
               <dd class="check">
-                <span :class="['iconfont','icon-xuanze', {'checked': item.checked}]"></span>
+                <span :class="['iconfont','icon-xuanze', {'checked': item.checked}]" @click="update('check', item)"></span>
                 <input type="checkbox" class="checkbox" checked="item.checked"/>
-                <img :src="'../../static/'+item.prodcutImg" :alt="item.productName">
+                <img :src="'../../static/'+item.productImg" :alt="item.productName">
               </dd>
               <dd class="product">{{item.productName}}</dd>
               <dd class="des">颜色: 不要太鲜艳, 我是喜欢的红色的!颜色: 不要太鲜艳, 我是喜欢的红色的!颜色: 不要太鲜艳, 我是喜欢的红色的!颜色: 不要太鲜艳, 我是喜欢的红色的!颜色: 不要太鲜艳, 我是喜欢的红色的!颜色: 不要太鲜艳, 我是喜欢的红色的! </dd>
-              <dd class="price text-right">{{item.prodcutPrice | priceFilter}}</dd>
+              <dd class="price text-right">{{item.productPrice | priceFilter}}</dd>
               <dd class="num">
                 <button class="add btn" @click="update('add', item)">+</button>
                 <input type="text" v-model="item.productNum" class="text-center">
                 <button class="minus btn" @click="update('minus', item)">-</button>
               </dd>
-              <dd class="subtotal text-right">{{item.prodcutPrice * item.productNum | priceFilter}}</dd>
+              <dd class="subtotal text-right">{{item.productPrice * item.productNum | priceFilter}}</dd>
               <dd class="operation">
                 <span class="iconfont icon-shanchu" @click="delProductConfirm(item.productId, key)"></span>
               </dd>
@@ -131,6 +131,30 @@
             this.userisModel = true
             if (resData.status === 200) {
               this.cartList.splice(this.delIndex, 1)
+            }
+          })
+        },
+        update (flag, item) {
+          if (flag === 'add') {
+            item.productNum ++
+          } else if (flag === 'minus') {
+            if (item.productNum <= 1) {
+              return
+            } else {
+              item.productNum --
+            }
+          } else {
+            item.checked = !item.checked
+          }
+          axios.post('/users/cart/update', {
+            productId: item.productId,
+            productNum: item.productNum,
+            checked: item.checked
+          }).then(res => {
+            let resData = res.data
+            console.log(resData.msg)
+            if (resData.status !== 200) {
+              item.checked = !item.checked
             }
           })
         }

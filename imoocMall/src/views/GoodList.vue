@@ -32,9 +32,9 @@
         <div class='right goodlist-body'>
           <ul>
             <li class="item" v-for="(item, index) in goodList" :key="index">
-              <img v-lazy="'../../static/' + item.prodcutImg" :alt="item.productName">
+              <img v-lazy="'../../static/' + item.productImg" :alt="item.productName">
               <p class="name">{{ item.productName }}</p>
-              <p class="price">{{ item.prodcutPrice|priceFilter }}</p>
+              <p class="price">{{ item.productPrice|priceFilter }}</p>
               <button class='btn cartBtn' @click="addCart(item.productId)">加入购物车</button>
             </li>
           </ul>

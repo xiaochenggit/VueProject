@@ -179,5 +179,91 @@ router.post('/cart/checkall', (req, res, next) => {
       }
     }
   })
-})
+});
+
+// 获得地址
+router.get('/address', (req, res, next) => {
+  let cookieUser = JSON.parse(req.cookies.dumall);
+  User.findOne(cookieUser, (err, user) => {
+    if (err) {
+      res.json({
+        status: 400,
+        msg: err.msg
+      });
+    } else {
+      if (user) {
+        res.json({
+          status: 200,
+          msg: '获得用户地址信息成功！',
+          result: user.addressList
+        })
+      } else {
+        res.json({
+          status: 400,
+          msg: '没有获得用户信息,请重新登录！'
+        })
+      }
+    }
+  });
+});
+
+// 设置默认地址
+router.post('/address/setdefault', (req, res, next) => {
+  let cookieUser = JSON.parse(req.cookies.dumall);
+  let addressId = req.body.addressId || '';
+  User.findOne(cookieUser, (err, user) => {
+    if (err) {
+      res.json({
+        status: 400,
+        msg: err.message
+      });
+    } else {
+      if (user) {
+        user.addressList.forEach((item) => {
+          if (item.addressId == addressId) {
+            item.checked = true
+          } else {
+            item.checked = false
+          }
+        });
+        user.save(() => {
+          res.json({
+            status: 200,
+            msg: '设置默认地址成功!'
+          })
+        })
+      } else {
+        res.json({
+          status: 400,
+          msg: '没找到用户信息！请重新登录!'
+        })
+      }
+    }
+  })
+});
+
+// 删除地址
+router.post('/address/delete', (req, res, next) => {
+  let cookieUser = JSON.parse(req.cookies.dumall);
+  let addressId = req.body.addressId || 0;
+  User.update(cookieUser, {
+    $pull: {
+      addressList: {
+        addressId
+      }
+    }
+  }, (err) => {
+    if(err) {
+      res.json({
+        status: 400,
+        msg: err.msg
+      })
+    } else {
+      res.json({
+        status: 200,
+        msg: '删除地址成功!'
+      });
+    }
+  });
+});
 module.exports = router;

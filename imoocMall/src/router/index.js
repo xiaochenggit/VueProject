@@ -4,6 +4,7 @@ import VueResource from 'vue-resource'
 // import Hello from '@/components/Hello'
 import GoodList from '@/views/GoodList'
 import Cart from '@/views/Cart'
+import Address from '@/views/Address'
 import VueLazyload from 'vue-lazyload'
 import infiniteScroll from 'vue-infinite-scroll'
 import { currency } from '../js/currency'
@@ -34,6 +35,11 @@ export default new Router({
       path: '/cart',
       name: 'Cart',
       component: Cart
+    },
+    {
+      path: '/address',
+      name: 'Address',
+      component: Address
     }
   ]
 })

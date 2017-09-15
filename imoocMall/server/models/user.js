@@ -14,7 +14,17 @@ let userSchema = new Schema({
         "checked": Boolean,
         "productNum": Number
     }],
-    "addressList": Array
+    "addressList": [{
+        "addressId": Number,
+        "userName": String,
+        "location": String,
+        "address": String,
+        "phone": Number,
+        "tel": String,
+        "email": String,
+        "checked": Boolean,
+        "des": String,
+    }]
 });
 
 module.exports = mongoose.model('User', userSchema);

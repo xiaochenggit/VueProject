@@ -53,7 +53,7 @@
               <dd class="product-check">已选择<span>1</span>件商品</dd>
               <div class="right">
                 <dd class="productPrice-all">总价：<span>{{getAllPrice | currency('¥')}}</span></dd>
-                <dd><button class="btn">去结算</button></dd>
+                <dd><button :class="['btn', {'dis': getCheckLength() == 0}]" @click="goChooseAddress">去结算</button></dd>
               </div>
             </dl>
           </div>
@@ -180,6 +180,12 @@
             }
           })
           return length
+        },
+        // 去结算
+        goChooseAddress () {
+          if (this.getCheckLength() > 0) {
+            this.$router.push({'path': '/address'})
+          }
         }
       },
       computed: {
@@ -221,7 +227,7 @@
   border: 1px solid #e9e9e9;
   font-size: 0.8rem;
   color: #000;
-  line-height: 2.4rem;
+  line-height: 2.3rem;
 }
 .cart-body .check{
   width: 133px;
@@ -304,6 +310,9 @@
   text-align: center;
   background-color: red;
   color: #f5f5f5;
+}
+.cart-dl .right .btn.dis{
+  background-color: #ccc;
 }
 .cart-dl .right .btn:hover{
   color: #fff;

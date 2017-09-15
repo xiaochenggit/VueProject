@@ -6,16 +6,22 @@ import GoodList from '@/views/GoodList'
 import Cart from '@/views/Cart'
 import VueLazyload from 'vue-lazyload'
 import infiniteScroll from 'vue-infinite-scroll'
+import { currency } from '../js/currency'
 
+// 缓存加载
 Vue.use(infiniteScroll)
 Vue.use(Router)
 Vue.use(VueResource)
+
+// 图片加载
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: '/static/dist/error.png',
   loading: '/static/dist/loading.gif',
   attempt: 1
 })
+
+Vue.filter('currency', currency)
 
 export default new Router({
   routes: [

@@ -30,13 +30,13 @@
               </dd>
               <dd class="product">{{item.productName}}</dd>
               <dd class="des">颜色: 不要太鲜艳, 我是喜欢的红色的!颜色: 不要太鲜艳, 我是喜欢的红色的!颜色: 不要太鲜艳, 我是喜欢的红色的!颜色: 不要太鲜艳, 我是喜欢的红色的!颜色: 不要太鲜艳, 我是喜欢的红色的!颜色: 不要太鲜艳, 我是喜欢的红色的! </dd>
-              <dd class="price text-right">{{item.productPrice | priceFilter}}</dd>
+              <dd class="price text-right">{{item.productPrice | currency('¥')}}</dd>
               <dd class="num">
                 <button class="add btn" @click="update('add', item)">+</button>
                 <input type="text" v-model="item.productNum" class="text-center">
                 <button class="minus btn" @click="update('minus', item)">-</button>
               </dd>
-              <dd class="subtotal text-right">{{item.productPrice * item.productNum | priceFilter}}</dd>
+              <dd class="subtotal text-right">{{item.productPrice * item.productNum | currency('¥')}}</dd>
               <dd class="operation">
                 <span class="iconfont icon-shanchu" @click="delProductConfirm(item.productId, key)"></span>
               </dd>
@@ -52,7 +52,7 @@
               <dd class="delete">删除选中的商品</dd>
               <dd class="product-check">已选择<span>1</span>件商品</dd>
               <div class="right">
-                <dd class="productPrice-all">总价：<span>{{getAllPrice | priceFilter}}</span></dd>
+                <dd class="productPrice-all">总价：<span>{{getAllPrice | currency('¥')}}</span></dd>
                 <dd><button class="btn">去结算</button></dd>
               </div>
             </dl>
@@ -196,13 +196,6 @@
             }
           })
           return price
-        }
-      },
-      filters: {
-        priceFilter (val) {
-          if (!val) return '¥0'
-          val = val.toString()
-          return '¥' + val
         }
       },
       components: {

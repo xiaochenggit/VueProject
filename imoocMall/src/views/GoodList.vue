@@ -25,7 +25,7 @@
             <li v-for="(price, index) in priceFilter" :key="index" 
               :class="{'cur': priceFilterCheck == index}"
                @click="changePriceFilter(index)">
-              {{ price.startPrice + '.00' + '-' + price.endPrice + '.00' }}
+              {{ price.startPrice | currency('¥') }} — {{ price.endPrice | currency('¥') }}
             </li>
           </ul>
         </div>
@@ -34,7 +34,7 @@
             <li class="item" v-for="(item, index) in goodList" :key="index">
               <img v-lazy="'../../static/' + item.productImg" :alt="item.productName">
               <p class="name">{{ item.productName }}</p>
-              <p class="price">{{ item.productPrice|priceFilter }}</p>
+              <p class="price">{{ item.productPrice| currency('¥') }}</p>
               <button class='btn cartBtn' @click="addCart(item.productId)">加入购物车</button>
             </li>
           </ul>
@@ -167,16 +167,6 @@ export default {
     },
     closeModel () {
       this.isModel = false
-    }
-  },
-  filters: {
-    /**
-     * 价格过滤器
-     */
-    priceFilter (val) {
-      if (!val) return ''
-      val = val.toString()
-      return '¥' + val
     }
   },
   components: {

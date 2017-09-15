@@ -38,14 +38,14 @@ router.get('/', (req, res, next) => {
     if (priceSection != 'All') {
         priceSection = JSON.parse(priceSection);
         // 价格区间
-        params['prodcutPrice']  = {
+        params['productPrice']  = {
             $gt: priceSection.startPrice,
             $lte: priceSection.endPrice
         }
     }
     // skip跳过条目 limit裁剪条目 sort 排序
     Goods.find(params).skip(skip).limit(pageSize).sort({
-        'prodcutPrice': sort
+        'productPrice': sort
     }).exec((err,docs) => {
         if(err) {
             res.json({

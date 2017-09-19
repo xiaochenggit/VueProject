@@ -1,19 +1,17 @@
 <template>
   <div class="main">
-      {{msg}}{{$route.params.id}}
+      {{msg}} 
   </div>
 </template>
 <script>
 export default {
-  name: 'OrderList',
+  name: 'OrderSuccess',
   data () {
     return {
-      msg: 'OrderList'
+      msg: '1'
     }
   }
 }
 </script>
 <style scoped>
-
 </style>
-

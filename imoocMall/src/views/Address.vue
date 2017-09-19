@@ -57,6 +57,12 @@
             <button class="btn">新增收货地址</button>
              您已创建<span>{{this.addressList.length}}</span>个收货地址 , 最多可创建20个
           </div>
+          <div class="next btn" @click="next">
+            next
+          </div>
+          <div class="next btn left" @click='prv'>
+            prv
+          </div>
         </div>
       </div>
       <vue-model :message='ModelMessage' :isShow='isModel' @close='isModel = false'>
@@ -170,6 +176,17 @@ export default {
         }
       })
     },
+    // 订单创建页面
+    next () {
+      let addressId = this.addressList[this.addressIndex].addressId
+      if (addressId) {
+        this.$router.push({name: 'OrderConfirm', params: { addressId }})
+      }
+    },
+    // 回到购物车
+    prv () {
+      this.$router.push({ name: 'Cart' })
+    },
     // 改变所选地址下标
     changeAddressIndex (index) {
       this.addressIndex = index
@@ -275,5 +292,18 @@ export default {
   .tip .btn {
     cursor: pointer;
     color: #f60;
+  }
+  .next {
+    width: 5rem;
+    float: right;
+    line-height: 2rem;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 0.2rem;
+    background-color: #f60;
+    margin: 0.5rem 0;
+  }
+  .next.left{
+    float: left;
   }
 </style>

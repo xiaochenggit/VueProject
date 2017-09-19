@@ -5,7 +5,9 @@ import VueResource from 'vue-resource'
 import GoodList from '@/views/GoodList'
 import Cart from '@/views/Cart'
 import Address from '@/views/Address'
-import OrderList from '@/views/OrderList'
+import OrderConfirm from '@/views/OrderConfirm'
+import OrderSuccess from '@/views/OrderSuccess'
+
 import VueLazyload from 'vue-lazyload'
 import infiniteScroll from 'vue-infinite-scroll'
 import { currency } from '../js/currency'
@@ -42,9 +44,14 @@ export default new Router({
       name: 'Address',
       component: Address
     },
-    { path: '/orderlist/:id',
-      name: 'OrderList',
-      component: OrderList
+    { path: '/orderconfirm/:addressId',
+      name: 'OrderConfirm',
+      component: OrderConfirm
+    },
+    {
+      path: '/ordersuccess/:orderId',
+      name: 'OrderSuccess',
+      component: OrderSuccess
     }
   ]
 })

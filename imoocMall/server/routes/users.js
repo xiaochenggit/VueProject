@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 let User = require('../models/user');
+require('../until/dateformat');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -263,6 +264,76 @@ router.post('/address/delete', (req, res, next) => {
         status: 200,
         msg: '删除地址成功!'
       });
+    }
+  });
+});
+
+// 创建订单 
+router.post('/createorder', (req, res, next) => {
+  let cookieUser = JSON.parse(req.cookies.dumall);
+  let addressId = req.body.addressId;
+  let price = req.body.price;
+  User.findOne(cookieUser, (err, user) => {
+    if (err) {
+      res.json({
+        status: 400,
+        msg: err.message
+      })
+    } else {
+      if (user) {
+        let address = {};
+        let goodList = [];
+        user.addressList.forEach((item) => {
+          if (item.addressId == addressId) {
+            address = item
+          }
+        });
+        for (var i = 0; i < user.cartList.length; i++) {
+          if (user.cartList[i].checked) {
+            goodList.push(user.cartList[i]);
+            user.cartList.splice(i, 1);
+            i --;
+          }
+        }
+        // user.cartList.forEach((item, index) => {
+        //   if (item.checked) {
+        //     goodList.push(item);
+        //     user.cartList.splice(index, 1)
+        //   }
+        // })
+        let company = '7758';
+        let r1 = Math.floor(Math.random() * 10);
+        let r2 = Math.floor(Math.random() * 10);
+        let order = {
+          orderId: company + r1 + new Date().Format('yyyyMMddhhmmss') + r2,
+          orderAddress: address,
+          orderPrice: price,
+          orderGoodList: goodList,
+          createTime: new Date().Format("yyyy-M-d hh:mm:ss")
+        }
+        user.orderList.push(order);
+        user.save((err, user) => {
+          if (err) {
+            res.json({
+              status: 400,
+              msg: err.msg
+            })
+          } else {
+            res.json({
+              status: 200,
+              result: {
+                orderId: order.orderId
+              },
+              msg: '创建订单成功!'
+            })
+          }
+        })
+      } else {
+        res.json({
+          status: 400,
+          msg: '请重新登录!'
+        })
+      }
     }
   });
 });

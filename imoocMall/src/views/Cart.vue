@@ -271,11 +271,14 @@
 .cart-main {
   margin: 1rem 0px;
   border-top: 2px solid #aaa;
+  border-bottom: 2px solid #aaa;
 }
 .cart-main dl {
   padding: 1rem 0px;
-  margin-bottom: 1rem;
   background-color: #fff4e8;
+}
+.cart-main dl + dl {
+  margin-top: 1rem;
 }
 .cart-main .check img{
   width: 6rem;

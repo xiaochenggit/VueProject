@@ -153,7 +153,6 @@
             checked: item.checked
           }).then(res => {
             let resData = res.data
-            console.log(resData.msg)
             if (resData.status !== 200) {
               item.checked = !item.checked
             }

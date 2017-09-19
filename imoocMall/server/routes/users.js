@@ -337,4 +337,47 @@ router.post('/createorder', (req, res, next) => {
     }
   });
 });
+
+// 获得订单信息
+router.get('/order', (req, res, next) => {
+  let cookieUser = JSON.parse(req.cookies.dumall);
+  let orderId = req.query.orderId;
+  User.findOne(cookieUser, (err, user) => {
+    if (err) {
+      res.json({
+        status: 400,
+        msg: err.message
+      })
+    } else {
+      if (user) {
+         let order = '';
+         user.orderList.forEach((item) => {
+            if (item.orderId == orderId) {
+              order = item;
+            }
+         });
+         if (order) {
+           res.json({
+             status: 200,
+             msg: '获取订单信息成功!',
+             result: {
+               orderId: order.orderId,
+               price: order.orderPrice
+             }
+           })
+         } else {
+           res.json({
+             status: 300,
+             msg: '此订单不存在!'
+           })
+         }
+      } else {
+        res.json({
+          status: 400,
+          msg: '用户信息未找到, 请重新登录!'
+        })
+      }
+    }
+  })
+});
 module.exports = router;

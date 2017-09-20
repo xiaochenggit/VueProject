@@ -2,7 +2,7 @@
     <nav class="bread">
         <div class="public">
             <router-link to="/">Home</router-link> / 
-            <router-link to="/cart">Cart</router-link>
+            <slot></slot>
         </div>
     </nav>
 </template>

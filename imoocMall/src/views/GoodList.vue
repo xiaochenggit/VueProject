@@ -1,7 +1,9 @@
 <template>
   <div class="main">
     <nav-header></nav-header>
-    <nav-bread></nav-bread>
+    <nav-bread>
+      <a href="javascript:void(0)">GoodList</a>
+    </nav-bread>
     <div class="goodlist">
       <div class='goodlist-nav'>
         <div class="public">

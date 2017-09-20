@@ -1,7 +1,9 @@
 <template>
   <div class="main">
      <nav-header></nav-header>
-     <nav-bread></nav-bread>
+     <nav-bread>
+       <a href="javascript:void(0)">OrderSuccess</a>
+     </nav-bread>
      <div class="orderSuccess">
        <div class="public">
          <h1>订单详情页面</h1>

@@ -1,7 +1,9 @@
 <template>
   <div class="main">
     <nav-header></nav-header>
-    <nav-bread></nav-bread>
+    <nav-bread>
+      <a href="javascript:void(0)">Address</a>
+    </nav-bread>
     <div class="addressPage">
       <div class="public">
         <div class="left address-nav">
@@ -113,6 +115,13 @@ export default {
     // 显示地址数组
     addressListFilter () {
       return this.addressList.slice(0, this.limitNum)
+    }
+  },
+  watch: {
+    '$store.state.nickName' (val) {
+      if (val) {
+        this.getAddressList()
+      }
     }
   },
   methods: {

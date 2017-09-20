@@ -1,7 +1,9 @@
 <template>
   <div class="main">
     <nav-header></nav-header>
-    <nav-bread></nav-bread>
+    <nav-bread>
+      <a href="javascript:void(0)">Cart</a>
+    </nav-bread>
     <div class="cart">
       <div class="public">
         <h2>全部商品</h2>
@@ -97,6 +99,13 @@
           delIndex: 0,
           delProductMessage: '确定删除该商品吗?',
           delisModel: false
+        }
+      },
+      watch: {
+        '$store.state.nickName' (val) {
+          if (val) {
+            this.getCartList()
+          }
         }
       },
       mounted () {

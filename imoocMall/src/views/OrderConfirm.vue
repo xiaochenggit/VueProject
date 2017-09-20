@@ -1,7 +1,9 @@
 <template>
   <div class="main">
     <nav-header></nav-header>
-    <nav-bread></nav-bread>
+    <nav-bread>
+      <a href="javascript:void(0)">OrderConfirm</a>
+    </nav-bread>
     <div class="orderconfirm">
       <div class="public">
         <h2>订单详情</h2>

@@ -11,7 +11,7 @@
         <div class="login" v-else>
           <span>{{nickName}}</span>|<span @click="logOut">登出</span>
         </div>
-        <span class="iconfont icon-gouwuche"><span v-if="cartCount">{{cartCount}}</span></span>
+        <span class="iconfont icon-gouwuche" @click="goCart"><span v-if="cartCount">{{cartCount}}</span></span>
       </div>
     </div>
       <transition name="fade">
@@ -136,6 +136,9 @@
             this.$store.commit('updateCartCount', resData.result)
           }
         })
+      },
+      goCart () {
+        this.$router.push({name: 'Cart'})
       }
     },
     mounted () {

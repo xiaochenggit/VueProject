@@ -101,7 +101,35 @@ router.get('/cartlist', (req, res, next) => {
     }
   })
 });
-
+// 获得购物车数量
+router.get('/cartcount', (req, res, next) => {
+  let cookieUser = JSON.parse(req.cookies.dumall);
+  User.findOne(cookieUser, (err, user) => {
+    if (err) {
+      res.json({
+        status: 400,
+        msg: err.message
+      });
+    } else {
+      if (user) {
+        let cartCount = 0;
+        user.cartList.forEach((item) => {
+          cartCount += item.productNum;
+        });
+        res.json({
+          status: 200,
+          msg: '获得购物车数量成功！',
+          result: cartCount
+        });
+      } else {
+        res.json({
+          status: 400,
+          msg: '用户信息不存在，请重新登录!'
+        })
+      }
+    }
+  })
+});
 // 删除购物车商品
 router.post('/cart/delete', (req, res, next) => {
   let cookieUser = JSON.parse(req.cookies.dumall);
@@ -283,6 +311,7 @@ router.post('/createorder', (req, res, next) => {
       if (user) {
         let address = {};
         let goodList = [];
+        let num = 0;
         user.addressList.forEach((item) => {
           if (item.addressId == addressId) {
             address = item
@@ -290,17 +319,13 @@ router.post('/createorder', (req, res, next) => {
         });
         for (var i = 0; i < user.cartList.length; i++) {
           if (user.cartList[i].checked) {
+            num += user.cartList[i].productNum;
             goodList.push(user.cartList[i]);
             user.cartList.splice(i, 1);
             i --;
           }
         }
-        // user.cartList.forEach((item, index) => {
-        //   if (item.checked) {
-        //     goodList.push(item);
-        //     user.cartList.splice(index, 1)
-        //   }
-        // })
+       
         let company = '7758';
         let r1 = Math.floor(Math.random() * 10);
         let r2 = Math.floor(Math.random() * 10);
@@ -322,7 +347,8 @@ router.post('/createorder', (req, res, next) => {
             res.json({
               status: 200,
               result: {
-                orderId: order.orderId
+                orderId: order.orderId,
+                productLength: num
               },
               msg: '创建订单成功!'
             })

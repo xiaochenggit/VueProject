@@ -13,7 +13,7 @@
            <h2>{{ isOrderGet ? '订单信息如下......' : '获取订单信息失败'}}</h2>
            <p v-if="isOrderGet">
              <span>Order ID:{{orderId}}</span>
-             <span>PRICE:{{price}}</span>
+             <span>PRICE:{{price | currency('¥')}}</span>
            </p>
          </div>
          <div class="btn-group" v-if="isOrderGet">
@@ -38,8 +38,8 @@ export default {
   data () {
     /**
      * 订单详情
-     * {Boolean} isOrderGet 订单是否获得 
-     * {Number} price 订单价格 
+     * {Boolean} isOrderGet 订单是否获得
+     * {Number} price 订单价格
      * {Number} orderId 订单id
      * {String} modelMessage 弹出框信息
      * {isModel} isModel 弹出框是否显示

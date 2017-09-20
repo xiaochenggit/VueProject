@@ -130,6 +130,7 @@
             this.usermodelMessage = resData.msg
             this.userisModel = true
             if (resData.status === 200) {
+              this.$store.commit('updateCartCount', -this.cartList[this.delIndex].productNum)
               this.cartList.splice(this.delIndex, 1)
             }
           })
@@ -153,8 +154,14 @@
             checked: item.checked
           }).then(res => {
             let resData = res.data
-            if (resData.status !== 200) {
+            if (resData.status !== 200 && flag === 'check') {
               item.checked = !item.checked
+            } else {
+              if (flag === 'add') {
+                this.$store.commit('updateCartCount', 1)
+              } else if (flag === 'minus') {
+                this.$store.commit('updateCartCount', -1)
+              }
             }
           })
         },

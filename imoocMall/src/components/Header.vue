@@ -11,7 +11,7 @@
         <div class="login" v-else>
           <span>{{nickName}}</span>|<span @click="logOut">登出</span>
         </div>
-        <span class="iconfont icon-gouwuche"></span>
+        <span class="iconfont icon-gouwuche"><span v-if="cartCount">{{cartCount}}</span></span>
       </div>
     </div>
       <transition name="fade">
@@ -72,7 +72,6 @@
        * {Boolean} isUserRegister 用户注册模态框是否显示 默认 false
        */
       return {
-        nickName: '',
         userName: '',
         userPwd: '',
         userErrTip: '',
@@ -80,7 +79,16 @@
         isUserRegister: false
       }
     },
+    computed: {
+      nickName () {
+        return this.$store.state.nickName
+      },
+      cartCount () {
+        return this.$store.state.cartCount
+      }
+    },
     methods: {
+      // 登录
       login () {
         if (!this.userName.trim() || !this.userPwd.trim()) {
           this.userErrTip = '用户名或密码不能为空！'
@@ -93,24 +101,39 @@
           let resDate = res.data
           if (resDate.status === 200) {
             this.isUserLogin = false
-            this.nickName = resDate.result.userName
+            this.$store.commit('updateUserInfo', resDate.result.userName)
+            this.getCartCount()
           } else {
             this.userErrTip = resDate.msg
           }
         })
       },
+      // 登出
       logOut () {
         axios.post('/users/logout').then(res => {
           if (res.data.status === 200) {
-            this.nickName = ''
+            this.$store.commit('updateUserInfo', '')
+            this.$store.state.cartCount = 0
           }
         })
       },
+      // 验证是否登录
       checkLogin () {
         axios.get('/users/cheklogin').then(res => {
           let resData = res.data
           if (resData.status === 200) {
-            this.nickName = JSON.parse(resData.result).userName
+            this.$store.commit('updateUserInfo', JSON.parse(resData.result).userName)
+            this.getCartCount()
+          }
+        })
+      },
+      // 获得购物车数量
+      getCartCount () {
+        axios.get('/users/cartcount').then(res => {
+          let resData = res.data
+          if (resData.status === 200) {
+            this.$store.state.cartCount = 0
+            this.$store.commit('updateCartCount', resData.result)
           }
         })
       }
@@ -167,9 +190,23 @@
   .icon-gouwuche {
     font-size: 1.4rem;
     color: #f60;
+    position: relative;
   }
   .icon-gouwuche:hover {
     color: #e65f05;
+  }
+  .icon-gouwuche span{
+    color: #fff;
+    background-color: red;
+    font-size: 0.8rem;
+    line-height: 1rem;
+    display: inline-block;
+    padding: 0 0.5rem;
+    border-radius: 0.4rem;
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    font-weight: bold;
   }
   .model {
     display: inline-block;

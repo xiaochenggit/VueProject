@@ -163,6 +163,9 @@ export default {
         let resData = res.data
         this.modelMessage = resData.msg
         this.isModel = true
+        if (resData.status === 200) {
+          this.$store.commit('updateCartCount', 1)
+        }
       })
     },
     closeModel () {

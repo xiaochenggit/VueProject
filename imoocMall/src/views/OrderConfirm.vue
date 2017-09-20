@@ -123,6 +123,7 @@ export default {
         let resData = res.data
         if (resData.status === 200) {
           this.$router.push({name: 'OrderSuccess', params: {orderId: resData.result.orderId}})
+          this.$store.commit('updateCartCount', resData.result.productLength)
         } else {
           this.usermodelMessage = resData.msg
           this.userisModel = true

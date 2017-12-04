@@ -2,7 +2,7 @@
   <header>
     <div class="public">
       <router-link to="/">
-        <img src="../assets/logo_new.png" alt="logo">
+        <!-- <img src="../assets/logo_new.png" alt="logo"> -->
       </router-link>
       <div class="userBox">
         <div class="noLogin" v-if="nickName == ''">

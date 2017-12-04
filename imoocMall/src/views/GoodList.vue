@@ -34,7 +34,7 @@
         <div class='right goodlist-body'>
           <ul>
             <li class="item" v-for="(item, index) in goodList" :key="index">
-              <img v-lazy="'../../static/' + item.productImg" :alt="item.productName">
+              <img :src="'../../static/' + item.productImg" :alt="item.productName">
               <p class="name">{{ item.productName }}</p>
               <p class="price">{{ item.productPrice| currency('¥') }}</p>
               <button class='btn cartBtn' @click="addCart(item.productId)">加入购物车</button>

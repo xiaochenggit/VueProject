@@ -106,11 +106,10 @@ router.post('/addCart', (req, res, next) => {
                             });
                         } else {
                             if (good) {
-                                var newGood = {
-                                    ...good._doc,
-                                    checked: true,
-                                    productNum: 1
-                                };
+																let newGood = JSON.parse(JSON.stringify(good));
+																newGood.productNum = 1;
+																newGood.checked = true;
+																console.log(newGood);
                                 user.cartList.push(newGood);
                                 user.save(() => {
                                     res.json({

@@ -11,7 +11,8 @@ router.get('/', function(req, res, next) {
 // 用户登录
 router.post('/login', (req, res, next) => {
   let params = {
-    ...req.body
+    userName: req.body.userName,
+    userPwd: req.body.userPwd
   };
   User.findOne(params, (err, user) => {
     if (err) {
@@ -161,7 +162,8 @@ router.post('/cart/update', (req, res, next) => {
   let productId = req.body.productId;
   let productNum = req.body.productNum;
   let checked = req.body.checked;
-  User.update({ ...cookieUser, "cartList.productId": productId}, {
+  cookieUser['cartList.productId'] = productId;
+  User.update(cookieUser, {
     "cartList.$.productNum": productNum,
     "cartList.$.checked": checked
   }, (err) => {

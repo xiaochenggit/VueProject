@@ -43,11 +43,11 @@
           <span class="iconfont icon-user"></span>
         </label>
         <label>
-          <input type="text" class="userPwd" v-model="userPwd" placeholder="password">
+          <input type="password" class="userPwd" v-model="userPwd" placeholder="password">
           <span class="iconfont icon-password"></span>
         </label>
         <label>
-          <input type="text" class="userPwd" v-model="userPwd" placeholder="confirm password">
+          <input type="password" class="userPwd" v-model="confirmUserPwd" placeholder="confirm password">
           <span class="iconfont icon-password"></span>
         </label>
         <button class="btn">注册</button>
@@ -67,6 +67,7 @@
        * {String} nickName 当前用户名 默认 ''
        * {String} userName 输入框用户名（login时） 默认 ''
        * {String} userPwd  输入框密码(login时) 默认 ''
+       * {String} confirmUserPwd 確認密碼
        * {String} userErrTip 用户登录错误信息 默认 ''
        * {Boolean} isUserLogin 用户登录模态框是否显示 默认 false
        * {Boolean} isUserRegister 用户注册模态框是否显示 默认 false

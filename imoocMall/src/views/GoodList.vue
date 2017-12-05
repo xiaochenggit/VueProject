@@ -244,7 +244,7 @@ export default {
     transition: transform 0.2s linear;
   }
   .item:hover {
-    box-shadow: 1px 1px 8px 1px red;
+    box-shadow: 0px 0px 8px 1px #000;
     transform: translate(0, -0.5rem);
   }
   .item img {

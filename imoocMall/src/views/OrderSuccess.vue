@@ -19,8 +19,8 @@
            </p>
          </div>
          <div class="btn-group" v-if="isOrderGet">
-           <button class="btn cartBtn">CART LIST</button>
-           <button class="btn cartBtn">GOODS LIST</button>
+           <button class="btn cartBtn" @click="reCart">CART LIST</button>
+           <button class="btn cartBtn" @click="reGoodsList">GOODS LIST</button>
          </div>
        </div>
        <vue-model :message='modelMessage' :isShow='isModel' @close='isModel = false'>
@@ -75,6 +75,12 @@ export default {
           this.isModel = true
         }
       })
+    },
+    reCart () {
+      this.$router.push({'path': '/cart'})
+    },
+    reGoodsList () {
+      this.$router.push({'path': '/'})
     }
   },
   components: {
